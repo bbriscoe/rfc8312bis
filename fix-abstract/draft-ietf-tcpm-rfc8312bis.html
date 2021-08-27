@@ -20,7 +20,7 @@ algorithm by the Linux, Windows, and Apple stacks.
 algorithmic improvements based on these implementations and recent
 academic work. Based on the extensive deployment experience with
 CUBIC, it also moves the specification to the Standards Track,
-obsoleting  . 
+obsoleting RFC 8312. 
     " name="description">
 <meta content="xml2rfc 3.9.1" name="generator">
 <meta content="draft-ietf-tcpm-rfc8312bis-latest" name="ietf.draft">
@@ -1018,11 +1018,11 @@ address div.right {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">CUBIC</td>
-<td class="right">July 2021</td>
+<td class="right">August 2021</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Xu, et al.</td>
-<td class="center">Expires 16 January 2022</td>
+<td class="center">Expires 28 February 2022</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1038,12 +1038,12 @@ address div.right {
 <a href="https://datatracker.ietf.org/doc/html/rfc8312" class="eref">8312</a> (if approved)</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2021-07-15" class="published">15 July 2021</time>
+<time datetime="2021-08-27" class="published">27 August 2021</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2022-01-16">16 January 2022</time></dd>
+<dd class="expires"><time datetime="2022-02-28">28 February 2022</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1082,7 +1082,7 @@ algorithm by the Linux, Windows, and Apple stacks.<a href="#section-abstract-1" 
 algorithmic improvements based on these implementations and recent
 academic work. Based on the extensive deployment experience with
 CUBIC, it also moves the specification to the Standards Track,
-obsoleting <span>[<a href="#RFC8312" class="xref">RFC8312</a>]</span>.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
+obsoleting RFC 8312.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
 </section>
 <section class="note" id="section-note.1">
       <h2 id="name-note-to-readers">
@@ -1128,7 +1128,7 @@ do this.<a href="#section-note.2-3" class="pilcrow">¶</a></p>
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 16 January 2022.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 28 February 2022.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1156,161 +1156,161 @@ do this.<a href="#section-note.2-3" class="pilcrow">¶</a></p>
         <a href="#" onclick="scroll(0,0)" class="toplink">▲</a><h2 id="name-table-of-contents">
 <a href="#name-table-of-contents" class="section-name selfRef">Table of Contents</a>
         </h2>
-<nav class="toc"><ul class="ulBare ulEmpty toc compact">
-<li class="ulBare ulEmpty toc compact" id="section-toc.1-1.1">
+<nav class="toc"><ul class="toc ulEmpty ulBare compact">
+<li class="toc ulEmpty ulBare compact" id="section-toc.1-1.1">
             <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="xref">1</a>.  <a href="#name-introduction" class="xref">Introduction</a></p>
 </li>
-          <li class="ulBare ulEmpty toc compact" id="section-toc.1-1.2">
+          <li class="toc ulEmpty ulBare compact" id="section-toc.1-1.2">
             <p id="section-toc.1-1.2.1" class="keepWithNext"><a href="#section-2" class="xref">2</a>.  <a href="#name-conventions" class="xref">Conventions</a></p>
 </li>
-          <li class="ulBare ulEmpty toc compact" id="section-toc.1-1.3">
+          <li class="toc ulEmpty ulBare compact" id="section-toc.1-1.3">
             <p id="section-toc.1-1.3.1"><a href="#section-3" class="xref">3</a>.  <a href="#name-design-principles-of-cubic" class="xref">Design Principles of CUBIC</a></p>
-<ul class="ulBare compact ulEmpty toc">
-<li class="ulBare compact ulEmpty toc" id="section-toc.1-1.3.2.1">
+<ul class="toc compact ulEmpty ulBare">
+<li class="toc compact ulEmpty ulBare" id="section-toc.1-1.3.2.1">
                 <p id="section-toc.1-1.3.2.1.1" class="keepWithNext"><a href="#section-3.1" class="xref">3.1</a>.  <a href="#name-principle-1-for-the-cubic-i" class="xref">Principle 1 for the CUBIC Increase Function</a></p>
 </li>
-              <li class="ulBare compact ulEmpty toc" id="section-toc.1-1.3.2.2">
+              <li class="toc compact ulEmpty ulBare" id="section-toc.1-1.3.2.2">
                 <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="xref">3.2</a>.  <a href="#name-principle-2-for-aimd-friend" class="xref">Principle 2 for AIMD Friendliness</a></p>
 </li>
-              <li class="ulBare compact ulEmpty toc" id="section-toc.1-1.3.2.3">
+              <li class="toc compact ulEmpty ulBare" id="section-toc.1-1.3.2.3">
                 <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="xref">3.3</a>.  <a href="#name-principle-3-for-rtt-fairnes" class="xref">Principle 3 for RTT Fairness</a></p>
 </li>
-              <li class="ulBare compact ulEmpty toc" id="section-toc.1-1.3.2.4">
+              <li class="toc compact ulEmpty ulBare" id="section-toc.1-1.3.2.4">
                 <p id="section-toc.1-1.3.2.4.1"><a href="#section-3.4" class="xref">3.4</a>.  <a href="#name-principle-4-for-the-cubic-d" class="xref">Principle 4 for the CUBIC Decrease Factor</a></p>
 </li>
             </ul>
 </li>
-          <li class="ulBare ulEmpty toc compact" id="section-toc.1-1.4">
+          <li class="toc ulEmpty ulBare compact" id="section-toc.1-1.4">
             <p id="section-toc.1-1.4.1"><a href="#section-4" class="xref">4</a>.  <a href="#name-cubic-congestion-control" class="xref">CUBIC Congestion Control</a></p>
-<ul class="ulBare compact ulEmpty toc">
-<li class="ulBare compact ulEmpty toc" id="section-toc.1-1.4.2.1">
+<ul class="toc compact ulEmpty ulBare">
+<li class="toc compact ulEmpty ulBare" id="section-toc.1-1.4.2.1">
                 <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="xref">4.1</a>.  <a href="#name-definitions" class="xref">Definitions</a></p>
-<ul class="ulBare compact ulEmpty toc">
-<li class="ulBare compact ulEmpty toc" id="section-toc.1-1.4.2.1.2.1">
+<ul class="toc compact ulEmpty ulBare">
+<li class="toc compact ulEmpty ulBare" id="section-toc.1-1.4.2.1.2.1">
                     <p id="section-toc.1-1.4.2.1.2.1.1"><a href="#section-4.1.1" class="xref">4.1.1</a>.  <a href="#name-constants-of-interest" class="xref">Constants of Interest</a></p>
 </li>
-                  <li class="ulBare compact ulEmpty toc" id="section-toc.1-1.4.2.1.2.2">
+                  <li class="toc compact ulEmpty ulBare" id="section-toc.1-1.4.2.1.2.2">
                     <p id="section-toc.1-1.4.2.1.2.2.1"><a href="#section-4.1.2" class="xref">4.1.2</a>.  <a href="#name-variables-of-interest" class="xref">Variables of Interest</a></p>
 </li>
                 </ul>
 </li>
-              <li class="ulBare compact ulEmpty toc" id="section-toc.1-1.4.2.2">
+              <li class="toc compact ulEmpty ulBare" id="section-toc.1-1.4.2.2">
                 <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="xref">4.2</a>.  <a href="#name-window-increase-function" class="xref">Window Increase Function</a></p>
 </li>
-              <li class="ulBare compact ulEmpty toc" id="section-toc.1-1.4.2.3">
+              <li class="toc compact ulEmpty ulBare" id="section-toc.1-1.4.2.3">
                 <p id="section-toc.1-1.4.2.3.1"><a href="#section-4.3" class="xref">4.3</a>.  <a href="#name-aimd-friendly-region" class="xref">AIMD-Friendly Region</a></p>
 </li>
-              <li class="ulBare compact ulEmpty toc" id="section-toc.1-1.4.2.4">
+              <li class="toc compact ulEmpty ulBare" id="section-toc.1-1.4.2.4">
                 <p id="section-toc.1-1.4.2.4.1"><a href="#section-4.4" class="xref">4.4</a>.  <a href="#name-concave-region" class="xref">Concave Region</a></p>
 </li>
-              <li class="ulBare compact ulEmpty toc" id="section-toc.1-1.4.2.5">
+              <li class="toc compact ulEmpty ulBare" id="section-toc.1-1.4.2.5">
                 <p id="section-toc.1-1.4.2.5.1"><a href="#section-4.5" class="xref">4.5</a>.  <a href="#name-convex-region" class="xref">Convex Region</a></p>
 </li>
-              <li class="ulBare compact ulEmpty toc" id="section-toc.1-1.4.2.6">
+              <li class="toc compact ulEmpty ulBare" id="section-toc.1-1.4.2.6">
                 <p id="section-toc.1-1.4.2.6.1"><a href="#section-4.6" class="xref">4.6</a>.  <a href="#name-multiplicative-decrease" class="xref">Multiplicative Decrease</a></p>
 </li>
-              <li class="ulBare compact ulEmpty toc" id="section-toc.1-1.4.2.7">
+              <li class="toc compact ulEmpty ulBare" id="section-toc.1-1.4.2.7">
                 <p id="section-toc.1-1.4.2.7.1"><a href="#section-4.7" class="xref">4.7</a>.  <a href="#name-fast-convergence" class="xref">Fast Convergence</a></p>
 </li>
-              <li class="ulBare compact ulEmpty toc" id="section-toc.1-1.4.2.8">
+              <li class="toc compact ulEmpty ulBare" id="section-toc.1-1.4.2.8">
                 <p id="section-toc.1-1.4.2.8.1"><a href="#section-4.8" class="xref">4.8</a>.  <a href="#name-timeout" class="xref">Timeout</a></p>
 </li>
-              <li class="ulBare compact ulEmpty toc" id="section-toc.1-1.4.2.9">
+              <li class="toc compact ulEmpty ulBare" id="section-toc.1-1.4.2.9">
                 <p id="section-toc.1-1.4.2.9.1"><a href="#section-4.9" class="xref">4.9</a>.  <a href="#name-spurious-congestion-events" class="xref">Spurious Congestion Events</a></p>
 </li>
-              <li class="ulBare compact ulEmpty toc" id="section-toc.1-1.4.2.10">
+              <li class="toc compact ulEmpty ulBare" id="section-toc.1-1.4.2.10">
                 <p id="section-toc.1-1.4.2.10.1"><a href="#section-4.10" class="xref">4.10</a>. <a href="#name-slow-start" class="xref">Slow Start</a></p>
 </li>
             </ul>
 </li>
-          <li class="ulBare ulEmpty toc compact" id="section-toc.1-1.5">
+          <li class="toc ulEmpty ulBare compact" id="section-toc.1-1.5">
             <p id="section-toc.1-1.5.1"><a href="#section-5" class="xref">5</a>.  <a href="#name-discussion" class="xref">Discussion</a></p>
-<ul class="ulBare compact ulEmpty toc">
-<li class="ulBare compact ulEmpty toc" id="section-toc.1-1.5.2.1">
+<ul class="toc compact ulEmpty ulBare">
+<li class="toc compact ulEmpty ulBare" id="section-toc.1-1.5.2.1">
                 <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="xref">5.1</a>.  <a href="#name-fairness-to-aimd-tcp" class="xref">Fairness to AIMD TCP</a></p>
 </li>
-              <li class="ulBare compact ulEmpty toc" id="section-toc.1-1.5.2.2">
+              <li class="toc compact ulEmpty ulBare" id="section-toc.1-1.5.2.2">
                 <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="xref">5.2</a>.  <a href="#name-using-spare-capacity" class="xref">Using Spare Capacity</a></p>
 </li>
-              <li class="ulBare compact ulEmpty toc" id="section-toc.1-1.5.2.3">
+              <li class="toc compact ulEmpty ulBare" id="section-toc.1-1.5.2.3">
                 <p id="section-toc.1-1.5.2.3.1"><a href="#section-5.3" class="xref">5.3</a>.  <a href="#name-difficult-environments" class="xref">Difficult Environments</a></p>
 </li>
-              <li class="ulBare compact ulEmpty toc" id="section-toc.1-1.5.2.4">
+              <li class="toc compact ulEmpty ulBare" id="section-toc.1-1.5.2.4">
                 <p id="section-toc.1-1.5.2.4.1"><a href="#section-5.4" class="xref">5.4</a>.  <a href="#name-investigating-a-range-of-en" class="xref">Investigating a Range of Environments</a></p>
 </li>
-              <li class="ulBare compact ulEmpty toc" id="section-toc.1-1.5.2.5">
+              <li class="toc compact ulEmpty ulBare" id="section-toc.1-1.5.2.5">
                 <p id="section-toc.1-1.5.2.5.1"><a href="#section-5.5" class="xref">5.5</a>.  <a href="#name-protection-against-congesti" class="xref">Protection against Congestion Collapse</a></p>
 </li>
-              <li class="ulBare compact ulEmpty toc" id="section-toc.1-1.5.2.6">
+              <li class="toc compact ulEmpty ulBare" id="section-toc.1-1.5.2.6">
                 <p id="section-toc.1-1.5.2.6.1"><a href="#section-5.6" class="xref">5.6</a>.  <a href="#name-fairness-within-the-alterna" class="xref">Fairness within the Alternative Congestion Control Algorithm</a></p>
 </li>
-              <li class="ulBare compact ulEmpty toc" id="section-toc.1-1.5.2.7">
+              <li class="toc compact ulEmpty ulBare" id="section-toc.1-1.5.2.7">
                 <p id="section-toc.1-1.5.2.7.1"><a href="#section-5.7" class="xref">5.7</a>.  <a href="#name-performance-with-misbehavin" class="xref">Performance with Misbehaving Nodes and Outside Attackers</a></p>
 </li>
-              <li class="ulBare compact ulEmpty toc" id="section-toc.1-1.5.2.8">
+              <li class="toc compact ulEmpty ulBare" id="section-toc.1-1.5.2.8">
                 <p id="section-toc.1-1.5.2.8.1"><a href="#section-5.8" class="xref">5.8</a>.  <a href="#name-behavior-for-application-li" class="xref">Behavior for Application-Limited Flows</a></p>
 </li>
-              <li class="ulBare compact ulEmpty toc" id="section-toc.1-1.5.2.9">
+              <li class="toc compact ulEmpty ulBare" id="section-toc.1-1.5.2.9">
                 <p id="section-toc.1-1.5.2.9.1"><a href="#section-5.9" class="xref">5.9</a>.  <a href="#name-responses-to-sudden-or-tran" class="xref">Responses to Sudden or Transient Events</a></p>
 </li>
-              <li class="ulBare compact ulEmpty toc" id="section-toc.1-1.5.2.10">
+              <li class="toc compact ulEmpty ulBare" id="section-toc.1-1.5.2.10">
                 <p id="section-toc.1-1.5.2.10.1"><a href="#section-5.10" class="xref">5.10</a>. <a href="#name-incremental-deployment" class="xref">Incremental Deployment</a></p>
 </li>
             </ul>
 </li>
-          <li class="ulBare ulEmpty toc compact" id="section-toc.1-1.6">
+          <li class="toc ulEmpty ulBare compact" id="section-toc.1-1.6">
             <p id="section-toc.1-1.6.1"><a href="#section-6" class="xref">6</a>.  <a href="#name-security-considerations" class="xref">Security Considerations</a></p>
 </li>
-          <li class="ulBare ulEmpty toc compact" id="section-toc.1-1.7">
+          <li class="toc ulEmpty ulBare compact" id="section-toc.1-1.7">
             <p id="section-toc.1-1.7.1"><a href="#section-7" class="xref">7</a>.  <a href="#name-iana-considerations" class="xref">IANA Considerations</a></p>
 </li>
-          <li class="ulBare ulEmpty toc compact" id="section-toc.1-1.8">
+          <li class="toc ulEmpty ulBare compact" id="section-toc.1-1.8">
             <p id="section-toc.1-1.8.1"><a href="#section-8" class="xref">8</a>.  <a href="#name-references" class="xref">References</a></p>
-<ul class="ulBare compact ulEmpty toc">
-<li class="ulBare compact ulEmpty toc" id="section-toc.1-1.8.2.1">
+<ul class="toc compact ulEmpty ulBare">
+<li class="toc compact ulEmpty ulBare" id="section-toc.1-1.8.2.1">
                 <p id="section-toc.1-1.8.2.1.1"><a href="#section-8.1" class="xref">8.1</a>.  <a href="#name-normative-references" class="xref">Normative References</a></p>
 </li>
-              <li class="ulBare compact ulEmpty toc" id="section-toc.1-1.8.2.2">
+              <li class="toc compact ulEmpty ulBare" id="section-toc.1-1.8.2.2">
                 <p id="section-toc.1-1.8.2.2.1"><a href="#section-8.2" class="xref">8.2</a>.  <a href="#name-informative-references" class="xref">Informative References</a></p>
 </li>
             </ul>
 </li>
-          <li class="ulBare ulEmpty toc compact" id="section-toc.1-1.9">
+          <li class="toc ulEmpty ulBare compact" id="section-toc.1-1.9">
             <p id="section-toc.1-1.9.1"><a href="#appendix-A" class="xref">Appendix A</a>.  <a href="#name-acknowledgments" class="xref">Acknowledgments</a></p>
 </li>
-          <li class="ulBare ulEmpty toc compact" id="section-toc.1-1.10">
+          <li class="toc ulEmpty ulBare compact" id="section-toc.1-1.10">
             <p id="section-toc.1-1.10.1"><a href="#appendix-B" class="xref">Appendix B</a>.  <a href="#name-evolution-of-cubic" class="xref">Evolution of CUBIC</a></p>
-<ul class="ulBare compact ulEmpty toc">
-<li class="ulBare compact ulEmpty toc" id="section-toc.1-1.10.2.1">
+<ul class="toc compact ulEmpty ulBare">
+<li class="toc compact ulEmpty ulBare" id="section-toc.1-1.10.2.1">
                 <p id="section-toc.1-1.10.2.1.1"><a href="#appendix-B.1" class="xref">B.1</a>.  <a href="#name-since-draft-ietf-tcpm-rfc83" class="xref">Since draft-ietf-tcpm-rfc8312bis-02</a></p>
 </li>
-              <li class="ulBare compact ulEmpty toc" id="section-toc.1-1.10.2.2">
+              <li class="toc compact ulEmpty ulBare" id="section-toc.1-1.10.2.2">
                 <p id="section-toc.1-1.10.2.2.1"><a href="#appendix-B.2" class="xref">B.2</a>.  <a href="#name-since-draft-ietf-tcpm-rfc831" class="xref">Since draft-ietf-tcpm-rfc8312bis-01</a></p>
 </li>
-              <li class="ulBare compact ulEmpty toc" id="section-toc.1-1.10.2.3">
+              <li class="toc compact ulEmpty ulBare" id="section-toc.1-1.10.2.3">
                 <p id="section-toc.1-1.10.2.3.1"><a href="#appendix-B.3" class="xref">B.3</a>.  <a href="#name-since-draft-ietf-tcpm-rfc8312" class="xref">Since draft-ietf-tcpm-rfc8312bis-00</a></p>
 </li>
-              <li class="ulBare compact ulEmpty toc" id="section-toc.1-1.10.2.4">
+              <li class="toc compact ulEmpty ulBare" id="section-toc.1-1.10.2.4">
                 <p id="section-toc.1-1.10.2.4.1"><a href="#appendix-B.4" class="xref">B.4</a>.  <a href="#name-since-draft-eggert-tcpm-rfc" class="xref">Since draft-eggert-tcpm-rfc8312bis-03</a></p>
 </li>
-              <li class="ulBare compact ulEmpty toc" id="section-toc.1-1.10.2.5">
+              <li class="toc compact ulEmpty ulBare" id="section-toc.1-1.10.2.5">
                 <p id="section-toc.1-1.10.2.5.1"><a href="#appendix-B.5" class="xref">B.5</a>.  <a href="#name-since-draft-eggert-tcpm-rfc8" class="xref">Since draft-eggert-tcpm-rfc8312bis-02</a></p>
 </li>
-              <li class="ulBare compact ulEmpty toc" id="section-toc.1-1.10.2.6">
+              <li class="toc compact ulEmpty ulBare" id="section-toc.1-1.10.2.6">
                 <p id="section-toc.1-1.10.2.6.1"><a href="#appendix-B.6" class="xref">B.6</a>.  <a href="#name-since-draft-eggert-tcpm-rfc83" class="xref">Since draft-eggert-tcpm-rfc8312bis-01</a></p>
 </li>
-              <li class="ulBare compact ulEmpty toc" id="section-toc.1-1.10.2.7">
+              <li class="toc compact ulEmpty ulBare" id="section-toc.1-1.10.2.7">
                 <p id="section-toc.1-1.10.2.7.1"><a href="#appendix-B.7" class="xref">B.7</a>.  <a href="#name-since-draft-eggert-tcpm-rfc831" class="xref">Since draft-eggert-tcpm-rfc8312bis-00</a></p>
 </li>
-              <li class="ulBare compact ulEmpty toc" id="section-toc.1-1.10.2.8">
+              <li class="toc compact ulEmpty ulBare" id="section-toc.1-1.10.2.8">
                 <p id="section-toc.1-1.10.2.8.1"><a href="#appendix-B.8" class="xref">B.8</a>.  <a href="#name-since-rfc8312" class="xref">Since RFC8312</a></p>
 </li>
-              <li class="ulBare compact ulEmpty toc" id="section-toc.1-1.10.2.9">
+              <li class="toc compact ulEmpty ulBare" id="section-toc.1-1.10.2.9">
                 <p id="section-toc.1-1.10.2.9.1"><a href="#appendix-B.9" class="xref">B.9</a>.  <a href="#name-since-the-original-paper" class="xref">Since the Original Paper</a></p>
 </li>
             </ul>
 </li>
-          <li class="ulBare ulEmpty toc compact" id="section-toc.1-1.11">
+          <li class="toc ulEmpty ulBare compact" id="section-toc.1-1.11">
             <p id="section-toc.1-1.11.1"><a href="#appendix-C" class="xref"></a><a href="#name-authors-addresses" class="xref">Authors' Addresses</a></p>
 </li>
         </ul>
@@ -1327,12 +1327,12 @@ in the Linux, Windows, and Apple stacks, and has been used and
 deployed globally. Extensive, decade-long deployment experience in
 vastly different Internet scenarios has convincingly demonstrated that
 CUBIC is safe for deployment on the global Internet and delivers
-substantial benefits over traditional AIMD congestion control. It is
+substantial benefits over classical AIMD congestion control. It is
 therefore to be regarded as the current standard for TCP congestion
 control. CUBIC can also be used for other transport protocols such as
 QUIC <span>[<a href="#RFC9000" class="xref">RFC9000</a>]</span> and SCTP <span>[<a href="#RFC4960" class="xref">RFC4960</a>]</span> as a default congestion controller.<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">The design of CUBIC was motivated by the well-documented problem
-traditional TCP has with  low utilization over fast and long-distance
+classical TCP has with  low utilization over fast and long-distance
 networks <span>[<a href="#K03" class="xref">K03</a>]</span><span>[<a href="#RFC3649" class="xref">RFC3649</a>]</span>. This problem arises from a slow increase
 of the congestion window following a congestion event in a network
 with a large bandwidth-delay product (BDP). <span>[<a href="#HKLRX06" class="xref">HKLRX06</a>]</span> indicates that
@@ -1346,23 +1346,27 @@ standards and their variants collectively as "AIMD TCP" below because
 they use the Additive Increase and Multiplicative Decrease algorithm
 (AIMD).<a href="#section-1-2" class="pilcrow">¶</a></p>
 <p id="section-1-3">CUBIC, originally proposed in <span>[<a href="#HRX08" class="xref">HRX08</a>]</span>, is a modification to the
-congestion control algorithm of traditional AIMD TCP to remedy this
-problem. This document describes the most recent specification of
-CUBIC. Specifically, CUBIC uses a cubic function instead of the linear
+congestion control algorithm of classical AIMD TCP to remedy this
+problem. Specifically, CUBIC uses a cubic function instead of the linear
 window increase function of AIMD TCP to improve scalability and
 stability under fast and long-distance networks.<a href="#section-1-3" class="pilcrow">¶</a></p>
-<p id="section-1-4">Binary Increase Congestion Control (BIC-TCP) <span>[<a href="#XHR04" class="xref">XHR04</a>]</span>, a predecessor
+<p id="section-1-4">This document updates the specification of CUBIC to include
+algorithmic improvements based on these implementations and recent
+academic work. Based on the extensive deployment experience with
+CUBIC, it also moves the specification to the Standards Track,
+obsoleting <span>[<a href="#RFC8312" class="xref">RFC8312</a>]</span>.<a href="#section-1-4" class="pilcrow">¶</a></p>
+<p id="section-1-5">Binary Increase Congestion Control (BIC-TCP) <span>[<a href="#XHR04" class="xref">XHR04</a>]</span>, a predecessor
 of CUBIC, was selected as the default TCP congestion control algorithm
 by Linux in the year 2005 and had been used for several years by the
-Internet community at large.<a href="#section-1-4" class="pilcrow">¶</a></p>
-<p id="section-1-5">CUBIC uses a similar window increase function as BIC-TCP and is
+Internet community at large.<a href="#section-1-5" class="pilcrow">¶</a></p>
+<p id="section-1-6">CUBIC uses a similar window increase function as BIC-TCP and is
 designed to be less aggressive and fairer to AIMD TCP in bandwidth
 usage than BIC-TCP while maintaining the strengths of BIC-TCP such as
-stability, window scalability, and round-trip time (RTT) fairness.<a href="#section-1-5" class="pilcrow">¶</a></p>
-<p id="section-1-6">In the following sections, we first briefly explain the design
+stability, window scalability, and round-trip time (RTT) fairness.<a href="#section-1-6" class="pilcrow">¶</a></p>
+<p id="section-1-7">In the following sections, we first briefly explain the design
 principles of CUBIC, then provide the exact specification of CUBIC,
 and finally discuss the safety features of CUBIC following the
-guidelines specified in <span>[<a href="#RFC5033" class="xref">RFC5033</a>]</span>.<a href="#section-1-6" class="pilcrow">¶</a></p>
+guidelines specified in <span>[<a href="#RFC5033" class="xref">RFC5033</a>]</span>.<a href="#section-1-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="conventions">
@@ -1416,7 +1420,7 @@ in order to balance between the scalability and convergence speed.<a href="#sect
 </dd>
       <dd class="break"></dd>
 </dl>
-<div id="principle-1-for-the-cubic-increase-function">
+<div id="cubic-inc">
 <section id="section-3.1">
         <h3 id="name-principle-1-for-the-cubic-i">
 <a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-principle-1-for-the-cubic-i" class="section-name selfRef">Principle 1 for the CUBIC Increase Function</a>
@@ -1427,17 +1431,17 @@ last congestion event. While most alternative congestion control
 algorithms to AIMD TCP increase the congestion window using convex
 functions, CUBIC uses both the concave and convex profiles of a cubic
 function for window growth.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
-<p id="section-3.1-2">After a window reduction in response to a congestion event is detected
-by duplicate ACKs or Explicit Congestion Notification-Echo (ECN-Echo,
-ECE) ACKs <span>[<a href="#RFC3168" class="xref">RFC3168</a>]</span>, CUBIC remembers the congestion window size
-where it received the congestion event and performs a multiplicative
-decrease of the congestion window. When CUBIC enters into congestion
-avoidance, it starts to increase the congestion window using the
-concave profile of the cubic function. The cubic function is set to
-have its plateau at the remembered congestion window size, so that the
-concave window increase continues until then. After that, the cubic
-function turns into a convex profile and the convex window increase
-begins.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
+<p id="section-3.1-2">After a window reduction in response to a congestion event detected by
+duplicate ACKs, Explicit Congestion Notification-Echo (ECN-Echo, ECE)
+ACKs <span>[<a href="#RFC3168" class="xref">RFC3168</a>]</span>, TCP RACK <span>[<a href="#RFC8985" class="xref">RFC8985</a>]</span> or QUIC loss detection
+<span>[<a href="#RFC9002" class="xref">RFC9002</a>]</span>, CUBIC remembers the congestion window size at which it
+received the congestion event and performs a multiplicative decrease of
+the congestion window. When CUBIC enters into congestion avoidance, it
+starts to increase the congestion window using the concave profile of
+the cubic function. The cubic function is set to have its plateau at
+the remembered congestion window size, so that the concave window
+increase continues until then. After that, the cubic function turns
+into a convex profile and the convex window increase begins.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
 <p id="section-3.1-3">This style of window adjustment (concave and then convex) improves the
 algorithm stability while maintaining high network utilization
 <span>[<a href="#CEHRX07" class="xref">CEHRX07</a>]</span>. This is because the window size remains almost constant,
@@ -1545,7 +1549,11 @@ during the different stages of the CUBIC congestion controller.<a href="#section
 <a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-definitions" class="section-name selfRef">Definitions</a>
         </h3>
 <p id="section-4.1-1">The unit of all window sizes in this document is segments of the
-maximum segment size (MSS), and the unit of all times is seconds.<a href="#section-4.1-1" class="pilcrow">¶</a></p>
+maximum segment size (MSS), and the unit of all times is seconds.
+Implementations can use bytes to express window sizes, which would
+require factoring in the maximum segment size wherever necessary
+and replacing <em>segments_acked</em> with the number of bytes
+acknowledged in <a href="#eq4" class="xref">Figure 4</a>.<a href="#section-4.1-1" class="pilcrow">¶</a></p>
 <div id="constants-of-interest">
 <section id="section-4.1.1">
           <h4 id="name-constants-of-interest">
@@ -1646,7 +1654,10 @@ that is, W<sub>cubic</sub>(<em>t</em> + <em>RTT</em>), as described in <a href="
 An estimate for the congestion window in segments in the AIMD-friendly
 region, that is, an estimate for the congestion window of AIMD TCP.<a href="#section-4.1.2-12" class="pilcrow">¶</a></p>
 <p id="section-4.1.2-13"><em>segments_acked</em>:
-Number of segments acked when an ACK is received.<a href="#section-4.1.2-13" class="pilcrow">¶</a></p>
+Number of MSS-sized segments acked when an ACK is received. This
+number will be a decimal value when an ACK acknowledges an amount of data
+that is not MSS-sized. Specifically, it can be less than 1 when
+an ACK acknowledges a segment smaller than the MSS.<a href="#section-4.1.2-13" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1660,10 +1671,9 @@ Number of segments acked when an ACK is received.<a href="#section-4.1.2-13" cla
 increasing the congestion window only at the reception of an ACK. It
 does not make any changes to the TCP Fast Recovery and Fast Retransmit
 algorithms <span>[<a href="#RFC6582" class="xref">RFC6582</a>]</span><span>[<a href="#RFC6675" class="xref">RFC6675</a>]</span>.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
-<p id="section-4.2-2">During congestion avoidance after a congestion event where a packet
-loss is detected by duplicate ACKs or by receiving packets carrying
-ECE flags <span>[<a href="#RFC3168" class="xref">RFC3168</a>]</span>, CUBIC changes the window increase function of
-AIMD TCP.<a href="#section-4.2-2" class="pilcrow">¶</a></p>
+<p id="section-4.2-2">During congestion avoidance, after a congestion event is detected
+by mechanisms described in <a href="#cubic-inc" class="xref">Section 3.1</a>, CUBIC changes the window
+increase function of AIMD TCP.<a href="#section-4.2-2" class="pilcrow">¶</a></p>
 <p id="section-4.2-3">CUBIC uses the following window increase function:<a href="#section-4.2-3" class="pilcrow">¶</a></p>
 <div id="eq1">
 <figure id="figure-1">
@@ -2073,7 +2083,7 @@ least the same throughput as AIMD TCP.<a href="#section-4.3-1" class="pilcrow">�
 <span>[<a href="#FHP00" class="xref">FHP00</a>]</span>, which studies the performance of an AIMD algorithm with an
 additive factor of <span class="contact-name">α</span> (segments per <em>RTT</em>) and
 a multiplicative factor of <span class="contact-name">β</span>, denoted by
-AIMD(<span class="contact-name">α</span>, <span class="contact-name">β</span>).
+AIMD(<span class="contact-name">α</span>, <span class="contact-name">β</span>). <em>p</em> is the packet loss rate.
 Specifically, the average congestion window size of
 AIMD(<span class="contact-name">α</span>, <span class="contact-name">β</span>) can be
 calculated using <a href="#eq3" class="xref">Figure 3</a>.<a href="#section-4.3-2" class="pilcrow">¶</a></p>
@@ -2267,7 +2277,14 @@ in the AIMD-friendly region and <em>cwnd</em> SHOULD be set to
 <em>W<sub>est</sub></em> at each reception of an ACK.<a href="#section-4.3-8" class="pilcrow">¶</a></p>
 <p id="section-4.3-9"><em>W<sub>est</sub></em> is set equal to <em>cwnd<sub>start</sub></em> at the start
 of the congestion avoidance stage. After that, on every ACK,
-<em>W<sub>est</sub></em> is updated using <a href="#eq4" class="xref">Figure 4</a>.<a href="#section-4.3-9" class="pilcrow">¶</a></p>
+<em>W<sub>est</sub></em> is updated using <a href="#eq4" class="xref">Figure 4</a>. Note that this equation
+is for a connection where Appropriate Byte Counting (ABC) <span>[<a href="#RFC3465" class="xref">RFC3465</a>]</span>
+is disabled. For a connection with ABC enabled, this equation SHOULD be
+adjusted by using the number of acknowledged bytes instead of acknowledged
+segments. Also note that this equation works for connections with
+enabled or disabled Delayed ACKs <span>[<a href="#RFC5681" class="xref">RFC5681</a>]</span>, as
+<em>segments_acked</em> will be different based on
+the segments actually acknowledged by an ACK.<a href="#section-4.3-9" class="pilcrow">¶</a></p>
 <div id="eq4">
 <figure id="figure-4">
           <div id="section-4.3-10.1">
@@ -2490,10 +2507,10 @@ incremented by<a href="#section-4.5-3" class="pilcrow">¶</a></p>
         <h3 id="name-multiplicative-decrease">
 <a href="#section-4.6" class="section-number selfRef">4.6. </a><a href="#name-multiplicative-decrease" class="section-name selfRef">Multiplicative Decrease</a>
         </h3>
-<p id="section-4.6-1">When a packet loss is detected by duplicate ACKs or by receiving
-packets carrying ECE flags, CUBIC updates <em>W<sub>max</sub></em> and
-reduces <em>cwnd</em> and <em>ssthresh</em> immediately as described below. An
-implementation MAY set a smaller <em>ssthresh</em> than suggested below to
+<p id="section-4.6-1">When a congestion event is detected by mechanisms described in
+<a href="#cubic-inc" class="xref">Section 3.1</a>, CUBIC updates <em>W<sub>max</sub></em> and reduces <em>cwnd</em>
+and <em>ssthresh</em> immediately as described below. An implementation MAY
+set a smaller <em>ssthresh</em> than suggested below to
 accommodate rate-limited applications as described in <span>[<a href="#RFC7661" class="xref">RFC7661</a>]</span>.
 For both packet loss and congestion detection through ECN, the sender
 MAY employ a Fast Recovery algorithm to gradually adjust the
@@ -3159,7 +3176,7 @@ window reduction.<a href="#section-4.9-2" class="pilcrow">¶</a></p>
 <p id="section-4.9-4">CUBIC MAY implement an algorithm to detect spurious retransmissions,
 such as DSACK <span>[<a href="#RFC3708" class="xref">RFC3708</a>]</span>, Forward RTO-Recovery <span>[<a href="#RFC5682" class="xref">RFC5682</a>]</span> or Eifel
 <span>[<a href="#RFC3522" class="xref">RFC3522</a>]</span>. Once a spurious congestion event is detected, CUBIC
-SHOULD restore the original values of above mentioned variables as
+SHOULD restore the original values of above-mentioned variables as
 follows if the current <em>cwnd</em> is lower than <em>prior_cwnd</em>. Restoring
 the original values ensures that CUBIC's performance is similar to
 what it would be without spurious losses.<a href="#section-4.9-4" class="pilcrow">¶</a></p>
@@ -4161,8 +4178,16 @@ information about TCP security concerns can be found in <span>[<a href="#RFC5681
 <span class="refAuthor">Baker, F., Ed.</span> and <span class="refAuthor">G. Fairhurst, Ed.</span>, <span class="refTitle">"IETF Recommendations Regarding Active Queue Management"</span>, <span class="seriesInfo">BCP 197</span>, <span class="seriesInfo">RFC 7567</span>, <span class="seriesInfo">DOI 10.17487/RFC7567</span>, <time datetime="2015-07" class="refDate">July 2015</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/rfc7567">https://datatracker.ietf.org/doc/html/rfc7567</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8174">[RFC8174]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/rfc8174">https://datatracker.ietf.org/doc/html/rfc8174</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8985">[RFC8985]</dt>
+        <dd>
+<span class="refAuthor">Cheng, Y.</span>, <span class="refAuthor">Cardwell, N.</span>, <span class="refAuthor">Dukkipati, N.</span>, and <span class="refAuthor">P. Jha</span>, <span class="refTitle">"The RACK-TLP Loss Detection Algorithm for TCP"</span>, <span class="seriesInfo">RFC 8985</span>, <span class="seriesInfo">DOI 10.17487/RFC8985</span>, <time datetime="2021-02" class="refDate">February 2021</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/rfc8985">https://datatracker.ietf.org/doc/html/rfc8985</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9002">[RFC9002]</dt>
+      <dd>
+<span class="refAuthor">Iyengar, J., Ed.</span> and <span class="refAuthor">I. Swett, Ed.</span>, <span class="refTitle">"QUIC Loss Detection and Congestion Control"</span>, <span class="seriesInfo">RFC 9002</span>, <span class="seriesInfo">DOI 10.17487/RFC9002</span>, <time datetime="2021-05" class="refDate">May 2021</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/rfc9002">https://datatracker.ietf.org/doc/html/rfc9002</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
@@ -4181,7 +4206,7 @@ information about TCP security concerns can be found in <span>[<a href="#RFC5681
 <dd class="break"></dd>
 <dt id="GV02">[GV02]</dt>
         <dd>
-<span class="refAuthor">Gorinsky, S.</span> and <span class="refAuthor">H. Vin</span>, <span class="refTitle">"Extended Analysis of Binary Adjustment Algorithms"</span>, <span class="seriesInfo">Technical Report TR2002-29</span>, <span class="seriesInfo">Department of Computer Sciences</span>, <span class="seriesInfo">The University of Texas at Austin</span>, <time datetime="2002-08-11" class="refDate">11 August 2002</time>, <span>&lt;<a href="http://www.cs.utexas.edu/ftp/techreports/tr02-39.ps.gz">http://www.cs.utexas.edu/ftp/techreports/tr02-39.ps.gz</a>&gt;</span>. </dd>
+<span class="refAuthor">Gorinsky, S.</span> and <span class="refAuthor">H. Vin</span>, <span class="refTitle">"Extended Analysis of Binary Adjustment Algorithms"</span>, <span class="seriesInfo">Technical Report TR2002-29</span>, <span class="seriesInfo">Department of Computer Sciences</span>, <span class="seriesInfo">The University of Texas at Austin</span>, <time datetime="2002-08-11" class="refDate">11 August 2002</time>, <span>&lt;<a href="https://www.cs.utexas.edu/ftp/techreports/tr02-39.ps.gz">https://www.cs.utexas.edu/ftp/techreports/tr02-39.ps.gz</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="HKLRX06">[HKLRX06]</dt>
         <dd>
@@ -4198,6 +4223,10 @@ information about TCP security concerns can be found in <span>[<a href="#RFC5681
 <dt id="K03">[K03]</dt>
         <dd>
 <span class="refAuthor">Kelly, T.</span>, <span class="refTitle">"Scalable TCP: improving performance in highspeed wide area networks"</span>, <span class="seriesInfo">ACM SIGCOMM Computer Communication Review Vol. 33, pp. 83-91</span>, <span class="seriesInfo">DOI 10.1145/956981.956989</span>, <time datetime="2003-04" class="refDate">April 2003</time>, <span>&lt;<a href="https://doi.org/10.1145/956981.956989">https://doi.org/10.1145/956981.956989</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC3465">[RFC3465]</dt>
+        <dd>
+<span class="refAuthor">Allman, M.</span>, <span class="refTitle">"TCP Congestion Control with Appropriate Byte Counting (ABC)"</span>, <span class="seriesInfo">RFC 3465</span>, <span class="seriesInfo">DOI 10.17487/RFC3465</span>, <time datetime="2003-02" class="refDate">February 2003</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/rfc3465">https://datatracker.ietf.org/doc/html/rfc3465</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC3522">[RFC3522]</dt>
         <dd>
@@ -4270,17 +4299,29 @@ information about TCP security concerns can be found in <span>[<a href="#RFC5681
 <a href="#appendix-B.1" class="section-number selfRef">B.1. </a><a href="#name-since-draft-ietf-tcpm-rfc83" class="section-name selfRef">Since draft-ietf-tcpm-rfc8312bis-02</a>
         </h3>
 <ul class="normal">
-<li class="normal" id="appendix-B.1-1.1">add applicability to QUIC and SCTP
-(<a href="https://github.com/NTAP/rfc8312bis/issues/61">61</a>)<a href="#appendix-B.1-1.1" class="pilcrow">¶</a>
+<li class="normal" id="appendix-B.1-1.1">Decription of packet loss rate <em>p</em>
+(<a href="https://github.com/NTAP/rfc8312bis/issues/65">#65</a>)<a href="#appendix-B.1-1.1" class="pilcrow">¶</a>
 </li>
-          <li class="normal" id="appendix-B.1-1.2">clarity on setting alpha<em><sub>aimd</sub></em> to 1
-(<a href="https://github.com/NTAP/rfc8312bis/issues/68">68</a>)<a href="#appendix-B.1-1.2" class="pilcrow">¶</a>
+          <li class="normal" id="appendix-B.1-1.2">Clarification of TCP Friendly Equation for ABC and Delayed ACK
+(<a href="https://github.com/NTAP/rfc8312bis/issues/66">#66</a>)<a href="#appendix-B.1-1.2" class="pilcrow">¶</a>
 </li>
-          <li class="normal" id="appendix-B.1-1.3">introduce alpha<em><sub>cubic</sub></em>
-(<a href="https://github.com/NTAP/rfc8312bis/issues/64">64</a>)<a href="#appendix-B.1-1.3" class="pilcrow">¶</a>
+          <li class="normal" id="appendix-B.1-1.3">add applicability to QUIC and SCTP
+(<a href="https://github.com/NTAP/rfc8312bis/issues/61">#61</a>)<a href="#appendix-B.1-1.3" class="pilcrow">¶</a>
 </li>
-          <li class="normal" id="appendix-B.1-1.4">clarify <em>cwnd</em> growth in convex region
-(<a href="https://github.com/NTAP/rfc8312bis/issues/69">69</a>)<a href="#appendix-B.1-1.4" class="pilcrow">¶</a>
+          <li class="normal" id="appendix-B.1-1.4">clarity on setting alpha<em><sub>aimd</sub></em> to 1
+(<a href="https://github.com/NTAP/rfc8312bis/issues/68">#68</a>)<a href="#appendix-B.1-1.4" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="appendix-B.1-1.5">introduce alpha<em><sub>cubic</sub></em>
+(<a href="https://github.com/NTAP/rfc8312bis/issues/64">#64</a>)<a href="#appendix-B.1-1.5" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="appendix-B.1-1.6">clarify <em>cwnd</em> growth in convex region
+(<a href="https://github.com/NTAP/rfc8312bis/issues/69">#69</a>)<a href="#appendix-B.1-1.6" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="appendix-B.1-1.7">add guidance for using bytes and mention that segments count is decimal
+(<a href="https://github.com/NTAP/rfc8312bis/issues/67">#67</a>)<a href="#appendix-B.1-1.7" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="appendix-B.1-1.8">add loss events detected by RACK and QUIC loss detection
+(<a href="https://github.com/NTAP/rfc8312bis/issues/62">#62</a>)<a href="#appendix-B.1-1.8" class="pilcrow">¶</a>
 </li>
         </ul>
 </section>
