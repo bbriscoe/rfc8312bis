@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2021-07-25T00:01:06.628571+00:00",
+  "timestamp": "2021-08-29T00:00:48.815102+00:00",
   "repo": "NTAP/rfc8312bis",
   "labels": [
     {
@@ -8121,6 +8121,68 @@
               "updatedAt": "2021-07-22T07:17:46Z"
             }
           ]
+        }
+      ]
+    },
+    {
+      "number": 82,
+      "id": "MDExOlB1bGxSZXF1ZXN0NzIxMDg3NjAy",
+      "title": "Remove reference to 8312 from abstract. Describe changes in intro.",
+      "url": "https://github.com/NTAP/rfc8312bis/pull/82",
+      "state": "MERGED",
+      "author": "larseggert",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2021-08-27T07:12:31Z",
+      "updatedAt": "2021-08-27T07:16:56Z",
+      "baseRepository": "NTAP/rfc8312bis",
+      "baseRefName": "main",
+      "baseRefOid": "c126c0903f8e111c13e50da1368f1761e34f1198",
+      "headRepository": "NTAP/rfc8312bis",
+      "headRefName": "fix-abstract",
+      "headRefOid": "2bf9b26dd5ff110fcfd9f025d2126e0da5e74990",
+      "closedAt": "2021-08-27T07:16:40Z",
+      "mergedAt": "2021-08-27T07:16:40Z",
+      "mergedBy": "larseggert",
+      "mergeCommit": {
+        "oid": "0911de2510b074771c53a14c31244650a24b0155"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NzQwMjA5ODE2",
+          "commit": {
+            "abbreviatedOid": "a9f1343"
+          },
+          "author": "larseggert",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-08-27T07:14:04Z",
+          "updatedAt": "2021-08-27T07:14:04Z",
+          "comments": [
+            {
+              "originalPosition": 20,
+              "body": "```suggestion\r\nalgorithmic improvements based on the Linux, Windows, and Apple implementations and recent\r\n```",
+              "createdAt": "2021-08-27T07:14:04Z",
+              "updatedAt": "2021-08-27T07:14:04Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NzQwMjA5OTMz",
+          "commit": {
+            "abbreviatedOid": "a9f1343"
+          },
+          "author": "goelvidhi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2021-08-27T07:14:13Z",
+          "updatedAt": "2021-08-27T07:14:13Z",
+          "comments": []
         }
       ]
     }
