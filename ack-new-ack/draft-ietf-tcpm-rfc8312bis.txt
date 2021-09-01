@@ -6,13 +6,13 @@ TCPM                                                               L. Xu
 Internet-Draft                                                       UNL
 Obsoletes: 8312 (if approved)                                      S. Ha
 Intended status: Standards Track                                Colorado
-Expires: 4 March 2022                                            I. Rhee
+Expires: 5 March 2022                                            I. Rhee
                                                                   Bowery
                                                                  V. Goel
                                                               Apple Inc.
                                                           L. Eggert, Ed.
                                                                   NetApp
-                                                          31 August 2021
+                                                        1 September 2021
 
 
                CUBIC for Fast and Long-Distance Networks
@@ -71,7 +71,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 4 March 2022.
+   This Internet-Draft will expire on 5 March 2022.
 
 Copyright Notice
 
@@ -527,7 +527,7 @@ Table of Contents
                                             cubic
 
    which achieves the same average window size as AIMD TCP.  When
-   receiving an ACK in congestion avoidance (where _cwnd_ could be
+   receiving a new ACK in congestion avoidance (where _cwnd_ could be
    greater than or less than _W_max_), CUBIC checks whether W_cubic(_t_)
    is less than _W_est_. If so, CUBIC is in the AIMD-friendly region and
    _cwnd_ SHOULD be set to _W_est_ at each reception of an ACK.
@@ -556,9 +556,10 @@ Table of Contents
 
 4.4.  Concave Region
 
-   When receiving an ACK in congestion avoidance, if CUBIC is not in the
-   AIMD-friendly region and _cwnd_ is less than _W_max_, then CUBIC is
-   in the concave region.  In this region, _cwnd_ MUST be incremented by
+   When receiving a new ACK in congestion avoidance, if CUBIC is not in
+   the AIMD-friendly region and _cwnd_ is less than _W_max_, then CUBIC
+   is in the concave region.  In this region, _cwnd_ MUST be incremented
+   by
 
                                target - cwnd
                                -------------
@@ -569,9 +570,9 @@ Table of Contents
 
 4.5.  Convex Region
 
-   When receiving an ACK in congestion avoidance, if CUBIC is not in the
-   AIMD-friendly region and _cwnd_ is larger than or equal to _W_max_,
-   then CUBIC is in the convex region.
+   When receiving a new ACK in congestion avoidance, if CUBIC is not in
+   the AIMD-friendly region and _cwnd_ is larger than or equal to
+   _W_max_, then CUBIC is in the convex region.
 
    The convex region indicates that the network conditions might have
    changed since the last congestion event, possibly implying more
