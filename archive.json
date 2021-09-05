@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2021-09-02T00:01:01.963468+00:00",
+  "timestamp": "2021-09-05T00:01:12.768985+00:00",
   "repo": "NTAP/rfc8312bis",
   "labels": [
     {
@@ -3192,15 +3192,15 @@
       "id": "MDU6SXNzdWU5ODM3MTk3OTM=",
       "title": "Sec 5.5",
       "url": "https://github.com/NTAP/rfc8312bis/issues/95",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "larseggert",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "[Markku Kojo said](https://mailarchive.ietf.org/arch/msg/tcpm/nd4Af8QRQMDkp_R_9ZQMkI4yGAc):\r\n>Sec 5.5\r\n>\r\n>Setting lower bound of 2 MSS for cwnd with ECN may result in symptoms of congestion collapse with certain specific conditions, e.g., if the actual (physical) queue size is very large and there is a mix of ECN-capable (ECT) and not ECN-capable flows. When the number of ECN capable flows increase the start starving the not ECN-capable flows as ECT flows stop responding to congestion and start increasing the queue such that AQM has to drop almost all not ECT packets.",
       "createdAt": "2021-08-31T10:50:43Z",
-      "updatedAt": "2021-09-01T14:21:11Z",
-      "closedAt": null,
+      "updatedAt": "2021-09-02T05:38:01Z",
+      "closedAt": "2021-09-02T05:38:01Z",
       "comments": [
         {
           "author": "lisongxu",
@@ -3208,6 +3208,13 @@
           "body": "@larseggert @goelvidhi Is this one the same as or very similar to [issue #83](https://github.com/NTAP/rfc8312bis/issues/83) ?",
           "createdAt": "2021-09-01T14:21:11Z",
           "updatedAt": "2021-09-01T14:21:11Z"
+        },
+        {
+          "author": "goelvidhi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Yes. Dup of #83.",
+          "createdAt": "2021-09-02T05:38:01Z",
+          "updatedAt": "2021-09-02T05:38:01Z"
         }
       ]
     },
@@ -8613,7 +8620,7 @@
       "labels": [],
       "body": "This fixes #101.\r\n\r\nHowever, I only changed the one spot where the text actually said \"Upon receiving an ACK\". There are **many** more places where the text says \"an ACK\" - Markku would need to identify a bit better which ones he thinks need to be changed. So I am leaving this as a draft PR until we know we changed them all.",
       "createdAt": "2021-08-31T12:39:52Z",
-      "updatedAt": "2021-09-01T12:12:42Z",
+      "updatedAt": "2021-09-02T12:39:16Z",
       "baseRepository": "NTAP/rfc8312bis",
       "baseRefName": "main",
       "baseRefOid": "b06cef3554e9d95cd0b78d46459ecb4a43bef608",
@@ -8638,9 +8645,30 @@
           "body": "@goelvidhi I added those three (not four) additional cases to the PR.",
           "createdAt": "2021-09-01T12:12:31Z",
           "updatedAt": "2021-09-01T12:12:31Z"
+        },
+        {
+          "author": "larseggert",
+          "authorAssociation": "MEMBER",
+          "body": "@markkukojo does this PR address your issue?",
+          "createdAt": "2021-09-02T12:39:16Z",
+          "updatedAt": "2021-09-02T12:39:16Z"
         }
       ],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NzQ0NjIyNTk3",
+          "commit": {
+            "abbreviatedOid": "ff2d3bd"
+          },
+          "author": "goelvidhi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2021-09-02T05:40:12Z",
+          "updatedAt": "2021-09-02T05:40:12Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 104,
@@ -8654,7 +8682,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2021-08-31T12:45:50Z",
-      "updatedAt": "2021-09-01T06:52:22Z",
+      "updatedAt": "2021-09-02T12:39:37Z",
       "baseRepository": "NTAP/rfc8312bis",
       "baseRefName": "main",
       "baseRefOid": "b06cef3554e9d95cd0b78d46459ecb4a43bef608",
@@ -8665,7 +8693,15 @@
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "larseggert",
+          "authorAssociation": "MEMBER",
+          "body": "@markkukojo does this address your issue?",
+          "createdAt": "2021-09-02T12:39:36Z",
+          "updatedAt": "2021-09-02T12:39:36Z"
+        }
+      ],
       "reviews": []
     },
     {
@@ -8680,7 +8716,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2021-08-31T13:16:31Z",
-      "updatedAt": "2021-09-01T06:56:18Z",
+      "updatedAt": "2021-09-02T12:39:46Z",
       "baseRepository": "NTAP/rfc8312bis",
       "baseRefName": "main",
       "baseRefOid": "b06cef3554e9d95cd0b78d46459ecb4a43bef608",
@@ -8691,7 +8727,15 @@
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "larseggert",
+          "authorAssociation": "MEMBER",
+          "body": "@markkukojo does this address your issue?",
+          "createdAt": "2021-09-02T12:39:46Z",
+          "updatedAt": "2021-09-02T12:39:46Z"
+        }
+      ],
       "reviews": []
     }
   ]
