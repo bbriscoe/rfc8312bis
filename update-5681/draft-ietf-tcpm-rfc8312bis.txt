@@ -7,12 +7,12 @@ Internet-Draft                                                       UNL
 Obsoletes: 8312 (if approved)                                      S. Ha
 Updates: 5681 (if approved)                                     Colorado
 Intended status: Standards Track                                 I. Rhee
-Expires: 4 March 2022                                             Bowery
+Expires: 11 March 2022                                            Bowery
                                                                  V. Goel
                                                               Apple Inc.
                                                           L. Eggert, Ed.
                                                                   NetApp
-                                                          31 August 2021
+                                                        7 September 2021
 
 
                CUBIC for Fast and Long-Distance Networks
@@ -30,7 +30,7 @@ Abstract
    algorithmic improvements based on these implementations and recent
    academic work.  Based on the extensive deployment experience with
    CUBIC, it also moves the specification to the Standards Track,
-   obsoleting RFC 8312.  This also requires updating RFC 5861, to allow
+   obsoleting RFC 8312.  This also requires updating RFC 5681, to allow
    for CUBIC's occasionally more aggressive sending behavior.
 
 Note to Readers
@@ -72,7 +72,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 4 March 2022.
+   This Internet-Draft will expire on 11 March 2022.
 
 Copyright Notice
 
