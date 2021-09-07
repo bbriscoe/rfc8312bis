@@ -6,13 +6,13 @@ TCPM                                                               L. Xu
 Internet-Draft                                                       UNL
 Obsoletes: 8312 (if approved)                                      S. Ha
 Intended status: Standards Track                                Colorado
-Expires: 28 February 2022                                        I. Rhee
+Expires: 11 March 2022                                           I. Rhee
                                                                   Bowery
                                                                  V. Goel
                                                               Apple Inc.
                                                           L. Eggert, Ed.
                                                                   NetApp
-                                                          27 August 2021
+                                                        7 September 2021
 
 
                CUBIC for Fast and Long-Distance Networks
@@ -71,7 +71,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 28 February 2022.
+   This Internet-Draft will expire on 11 March 2022.
 
 Copyright Notice
 
@@ -128,16 +128,17 @@ Table of Contents
      8.2.  Informative References
    Appendix A.  Acknowledgments
    Appendix B.  Evolution of CUBIC
-     B.1.  Since draft-ietf-tcpm-rfc8312bis-03
-     B.2.  Since draft-ietf-tcpm-rfc8312bis-02
-     B.3.  Since draft-ietf-tcpm-rfc8312bis-01
-     B.4.  Since draft-ietf-tcpm-rfc8312bis-00
-     B.5.  Since draft-eggert-tcpm-rfc8312bis-03
-     B.6.  Since draft-eggert-tcpm-rfc8312bis-02
-     B.7.  Since draft-eggert-tcpm-rfc8312bis-01
-     B.8.  Since draft-eggert-tcpm-rfc8312bis-00
-     B.9.  Since RFC8312
-     B.10. Since the Original Paper
+     B.1.  Since draft-ietf-tcpm-rfc8312bis-04
+     B.2.  Since draft-ietf-tcpm-rfc8312bis-03
+     B.3.  Since draft-ietf-tcpm-rfc8312bis-02
+     B.4.  Since draft-ietf-tcpm-rfc8312bis-01
+     B.5.  Since draft-ietf-tcpm-rfc8312bis-00
+     B.6.  Since draft-eggert-tcpm-rfc8312bis-03
+     B.7.  Since draft-eggert-tcpm-rfc8312bis-02
+     B.8.  Since draft-eggert-tcpm-rfc8312bis-01
+     B.9.  Since draft-eggert-tcpm-rfc8312bis-00
+     B.10. Since RFC8312
+     B.11. Since the Original Paper
    Authors' Addresses
 
 1.  Introduction
@@ -761,11 +762,11 @@ W    = <
    be obtained by the following function:
 
                                   ________________      ____
-                                 /C * (3 + β     )   3 /   4
+                                 /C * (3 + β     )   4 /   3
                             4   /           cubic    |/ RTT
                AVG_W      = |  /  ---------------- * -------
                     cubic   | /   4 * (1 - β     )       __
-                            |/              cubic     3 / 4
+                            |/              cubic     4 / 3
                                                       |/ p
 
                                   Figure 5
@@ -773,11 +774,11 @@ W    = <
    With β__cubic_ set to 0.7, the above formula reduces to:
 
                                                   ____
-                                     _______   3 /   4
+                                     _______   4 /   3
                                  4  /C * 3.7   |/ RTT
                     AVG_W      = | / ------- * -------
                          cubic   |/    1.2         __
-                                                3 / 4
+                                                4 / 3
                                                 |/ p
 
                                   Figure 6
@@ -875,11 +876,11 @@ W    = <
    is reduced to:
 
                                                ____
-                                            3 /   4
+                                            4 /   3
                                             |/ RTT
                        AVG_W      = 1.054 * -------
                             cubic               __
-                                             3 / 4
+                                             4 / 3
                                              |/ p
 
                                   Figure 7
@@ -1168,12 +1169,17 @@ Appendix A.  Acknowledgments
 
 Appendix B.  Evolution of CUBIC
 
-B.1.  Since draft-ietf-tcpm-rfc8312bis-03
+B.1.  Since draft-ietf-tcpm-rfc8312bis-04
+
+   *  Fix incorrect math (#106 (https://github.com/NTAP/rfc8312bis/
+      issues/106))
+
+B.2.  Since draft-ietf-tcpm-rfc8312bis-03
 
    *  Remove reference from abstract (#82
       (https://github.com/NTAP/rfc8312bis/pull/82))
 
-B.2.  Since draft-ietf-tcpm-rfc8312bis-02
+B.3.  Since draft-ietf-tcpm-rfc8312bis-02
 
    *  Decription of packet loss rate _p_ (#65
       (https://github.com/NTAP/rfc8312bis/issues/65))
@@ -1199,18 +1205,18 @@ B.2.  Since draft-ietf-tcpm-rfc8312bis-02
    *  add loss events detected by RACK and QUIC loss detection (#62
       (https://github.com/NTAP/rfc8312bis/issues/62))
 
-B.3.  Since draft-ietf-tcpm-rfc8312bis-01
+B.4.  Since draft-ietf-tcpm-rfc8312bis-01
 
    *  address Michael Scharf's editorial suggestions. (#59
       (https://github.com/NTAP/rfc8312bis/issues/59))
 
    *  add "Note to the RFC Editor" about removing underscores
 
-B.4.  Since draft-ietf-tcpm-rfc8312bis-00
+B.5.  Since draft-ietf-tcpm-rfc8312bis-00
 
    *  use updated xml2rfc with better text rendering of subscripts
 
-B.5.  Since draft-eggert-tcpm-rfc8312bis-03
+B.6.  Since draft-eggert-tcpm-rfc8312bis-03
 
    *  fix spelling nits
 
@@ -1218,7 +1224,7 @@ B.5.  Since draft-eggert-tcpm-rfc8312bis-03
 
    *  define _W_max_ more clearly
 
-B.6.  Since draft-eggert-tcpm-rfc8312bis-02
+B.7.  Since draft-eggert-tcpm-rfc8312bis-02
 
    *  add definition for segments_acked and alpha__aimd_. (#47
       (https://github.com/NTAP/rfc8312bis/issues/47))
@@ -1230,7 +1236,7 @@ B.6.  Since draft-eggert-tcpm-rfc8312bis-02
       multiplicative decrease. (#53 (https://github.com/NTAP/rfc8312bis/
       issues/53))
 
-B.7.  Since draft-eggert-tcpm-rfc8312bis-01
+B.8.  Since draft-eggert-tcpm-rfc8312bis-01
 
    *  rename TCP-Friendly to AIMD-Friendly and rename Standard TCP to
       AIMD TCP to avoid confusion as CUBIC has been widely used on the
@@ -1243,7 +1249,7 @@ B.7.  Since draft-eggert-tcpm-rfc8312bis-01
    *  rephrase introduction to avoid referring to variables that have
       not been defined yet.
 
-B.8.  Since draft-eggert-tcpm-rfc8312bis-00
+B.9.  Since draft-eggert-tcpm-rfc8312bis-00
 
    *  acknowledge former co-authors (#15
       (https://github.com/NTAP/rfc8312bis/issues/15))
@@ -1278,7 +1284,7 @@ B.8.  Since draft-eggert-tcpm-rfc8312bis-00
       _W_(last_max)_ (#28 (https://github.com/NTAP/rfc8312bis/
       issues/28))
 
-B.9.  Since RFC8312
+B.10.  Since RFC8312
 
    *  converted to Markdown and xml2rfc v3
 
@@ -1290,7 +1296,7 @@ B.9.  Since RFC8312
 
    *  move to Standards Track
 
-B.10.  Since the Original Paper
+B.11.  Since the Original Paper
 
    CUBIC has gone through a few changes since the initial release
    [HRX08] of its algorithm and implementation.  Below we highlight the
