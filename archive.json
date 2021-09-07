@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2021-09-05T00:01:12.768985+00:00",
+  "timestamp": "2021-09-07T00:00:54.637667+00:00",
   "repo": "NTAP/rfc8312bis",
   "labels": [
     {
@@ -3382,6 +3382,24 @@
           "updatedAt": "2021-09-01T07:22:37Z"
         }
       ]
+    },
+    {
+      "number": 106,
+      "id": "MDU6SXNzdWU5ODkyNTg0MzI=",
+      "title": "Math is wrong",
+      "url": "https://github.com/NTAP/rfc8312bis/issues/106",
+      "state": "OPEN",
+      "author": "larseggert",
+      "authorAssociation": "MEMBER",
+      "assignees": [
+        "larseggert"
+      ],
+      "labels": [],
+      "body": "[Issue found by Neal.](https://mailarchive.ietf.org/arch/msg/tcpm/ObgshX5PWlM71GtTkzGPrlWYxUI)",
+      "createdAt": "2021-09-06T15:02:41Z",
+      "updatedAt": "2021-09-06T15:11:04Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -8737,6 +8755,46 @@
         }
       ],
       "reviews": []
+    },
+    {
+      "number": 107,
+      "id": "MDExOlB1bGxSZXF1ZXN0NzI4MDM2NTIx",
+      "title": "Fix #106",
+      "url": "https://github.com/NTAP/rfc8312bis/pull/107",
+      "state": "OPEN",
+      "author": "larseggert",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2021-09-06T15:08:16Z",
+      "updatedAt": "2021-09-06T15:16:42Z",
+      "baseRepository": "NTAP/rfc8312bis",
+      "baseRefName": "main",
+      "baseRefOid": "b06cef3554e9d95cd0b78d46459ecb4a43bef608",
+      "headRepository": "NTAP/rfc8312bis",
+      "headRefName": "fix-math",
+      "headRefOid": "c1143b04466e9600df4131560bac777e3494093a",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NzQ3MzEwODEx",
+          "commit": {
+            "abbreviatedOid": "c1143b0"
+          },
+          "author": "lisongxu",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Thanks.",
+          "createdAt": "2021-09-06T15:16:42Z",
+          "updatedAt": "2021-09-06T15:16:42Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
