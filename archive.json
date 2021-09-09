@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2021-09-07T00:00:54.637667+00:00",
+  "timestamp": "2021-09-09T00:01:04.301570+00:00",
   "repo": "NTAP/rfc8312bis",
   "labels": [
     {
@@ -3312,15 +3312,15 @@
       "labels": [],
       "body": "[Markku Kojo said](https://mailarchive.ietf.org/arch/msg/tcpm/nd4Af8QRQMDkp_R_9ZQMkI4yGAc):\r\n>_epoch_start_: needs more accurate and consistent definition when the exactly the epoch starts. Is it when congestion event occurs or when TSP sender enters congestion avoidance first time after an congestion event. If it is  different in different scenarios that would be good to present systematically.\r\n",
       "createdAt": "2021-08-31T10:53:06Z",
-      "updatedAt": "2021-09-01T12:09:44Z",
+      "updatedAt": "2021-09-08T04:27:55Z",
       "closedAt": null,
       "comments": [
         {
           "author": "goelvidhi",
           "authorAssociation": "COLLABORATOR",
-          "body": "From the draft,\r\n>  _epoch_start_: The time in seconds at which the current congestion\r\n   avoidance stage started.\r\n\r\nSo, it is when the sender enters the congestion avoidance first. ",
+          "body": "@markkukojo, from the draft,\r\n>  _epoch_start_: The time in seconds at which the current congestion\r\n   avoidance stage started.\r\n\r\nSo, it is when the sender enters the congestion avoidance first. ",
           "createdAt": "2021-09-01T07:06:52Z",
-          "updatedAt": "2021-09-01T07:07:01Z"
+          "updatedAt": "2021-09-08T04:27:40Z"
         },
         {
           "author": "larseggert",
@@ -3328,6 +3328,13 @@
           "body": "Markku, OK to close with no action?",
           "createdAt": "2021-09-01T12:09:44Z",
           "updatedAt": "2021-09-01T12:09:44Z"
+        },
+        {
+          "author": "goelvidhi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@markkukojo, could you please let us know?",
+          "createdAt": "2021-09-08T04:27:55Z",
+          "updatedAt": "2021-09-08T04:27:55Z"
         }
       ]
     },
@@ -3371,15 +3378,15 @@
       "labels": [],
       "body": "[Markku Kojo said](https://mailarchive.ietf.org/arch/msg/tcpm/nd4Af8QRQMDkp_R_9ZQMkI4yGAc):\r\n>On page 13:\r\n>\r\n> \" the sender MAY employ a Fast\r\n   Recovery algorithm to gradually adjust the congestion window to its\r\n   new reduced _ssthresh_ value.\"\r\n>\r\n>I assume this is aiming at saying that something similar to PRR MAY be used to reduce cwnd. This, however, is somewhat vaguely said and using fasr recovery is misleading. We need to remember also that it might not be trivial to have it right. So, dunno whether it would be useful to drop this.",
       "createdAt": "2021-08-31T10:54:13Z",
-      "updatedAt": "2021-09-01T07:22:43Z",
+      "updatedAt": "2021-09-08T04:27:22Z",
       "closedAt": null,
       "comments": [
         {
           "author": "goelvidhi",
           "authorAssociation": "COLLABORATOR",
-          "body": "Not necessarily. RFC3782 describes an updated Fast Recovery for new Reno which can be used for CUBIC as well. RFC 6675 provides better loss recovery using SACK scoreboard. Or as you said, one can use PRR for better adjustments to congestion window. We should refrain from specifying what an implementation should use.",
+          "body": "@markkukojo, Not necessarily. RFC3782 describes an updated Fast Recovery for new Reno which can be used for CUBIC as well. RFC 6675 provides better loss recovery using SACK scoreboard. Or as you said, one can use PRR for better adjustments to congestion window. We should refrain from specifying what an implementation should use.",
           "createdAt": "2021-09-01T07:22:37Z",
-          "updatedAt": "2021-09-01T07:22:37Z"
+          "updatedAt": "2021-09-08T04:27:22Z"
         }
       ]
     },
@@ -3388,7 +3395,7 @@
       "id": "MDU6SXNzdWU5ODkyNTg0MzI=",
       "title": "Math is wrong",
       "url": "https://github.com/NTAP/rfc8312bis/issues/106",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "larseggert",
       "authorAssociation": "MEMBER",
       "assignees": [
@@ -3397,8 +3404,8 @@
       "labels": [],
       "body": "[Issue found by Neal.](https://mailarchive.ietf.org/arch/msg/tcpm/ObgshX5PWlM71GtTkzGPrlWYxUI)",
       "createdAt": "2021-09-06T15:02:41Z",
-      "updatedAt": "2021-09-06T15:11:04Z",
-      "closedAt": null,
+      "updatedAt": "2021-09-07T06:24:27Z",
+      "closedAt": "2021-09-07T06:24:27Z",
       "comments": []
     }
   ],
@@ -8700,7 +8707,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2021-08-31T12:45:50Z",
-      "updatedAt": "2021-09-02T12:39:37Z",
+      "updatedAt": "2021-09-07T06:29:45Z",
       "baseRepository": "NTAP/rfc8312bis",
       "baseRefName": "main",
       "baseRefOid": "b06cef3554e9d95cd0b78d46459ecb4a43bef608",
@@ -8720,7 +8727,81 @@
           "updatedAt": "2021-09-02T12:39:36Z"
         }
       ],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NzQzNTQzMzQz",
+          "commit": {
+            "abbreviatedOid": "d360d24"
+          },
+          "author": "goelvidhi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-09-01T06:52:22Z",
+          "updatedAt": "2021-09-07T06:15:20Z",
+          "comments": [
+            {
+              "originalPosition": 12,
+              "body": "s/ as the currently most/as currently the most ?\r\n\r\n",
+              "createdAt": "2021-09-01T06:52:22Z",
+              "updatedAt": "2021-09-07T06:15:20Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NzQ3NTg2ODU1",
+          "commit": {
+            "abbreviatedOid": "d360d24"
+          },
+          "author": "larseggert",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-09-07T06:27:14Z",
+          "updatedAt": "2021-09-07T06:27:14Z",
+          "comments": [
+            {
+              "originalPosition": 12,
+              "body": "Not sure. Both sound OK to me, with a mild preference for my version, but am not a native speaker.",
+              "createdAt": "2021-09-07T06:27:14Z",
+              "updatedAt": "2021-09-07T06:27:14Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NzQ3NTg4MjE2",
+          "commit": {
+            "abbreviatedOid": "d360d24"
+          },
+          "author": "goelvidhi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-09-07T06:29:19Z",
+          "updatedAt": "2021-09-07T06:29:19Z",
+          "comments": [
+            {
+              "originalPosition": 12,
+              "body": "Me neither and I don't have preference either. Fine with what we have. :-)",
+              "createdAt": "2021-09-07T06:29:19Z",
+              "updatedAt": "2021-09-07T06:29:19Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NzQ3NTg4NTQ0",
+          "commit": {
+            "abbreviatedOid": "d360d24"
+          },
+          "author": "goelvidhi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2021-09-07T06:29:45Z",
+          "updatedAt": "2021-09-07T06:29:45Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 105,
@@ -8734,13 +8815,13 @@
       "labels": [],
       "body": "",
       "createdAt": "2021-08-31T13:16:31Z",
-      "updatedAt": "2021-09-02T12:39:46Z",
+      "updatedAt": "2021-09-07T06:28:38Z",
       "baseRepository": "NTAP/rfc8312bis",
       "baseRefName": "main",
       "baseRefOid": "b06cef3554e9d95cd0b78d46459ecb4a43bef608",
       "headRepository": "NTAP/rfc8312bis",
       "headRefName": "update-5681",
-      "headRefOid": "3ead32f36d01b196e666c681ac55ea76a705c8df",
+      "headRefOid": "c16bb18d019a597aa3fbf99276e39c2faebff184",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -8754,31 +8835,87 @@
           "updatedAt": "2021-09-02T12:39:46Z"
         }
       ],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NzQzNTQ2Mjg5",
+          "commit": {
+            "abbreviatedOid": "3ead32f"
+          },
+          "author": "goelvidhi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-09-01T06:56:18Z",
+          "updatedAt": "2021-09-07T06:14:43Z",
+          "comments": [
+            {
+              "originalPosition": 13,
+              "body": "s/RFC 5861/RFC 5681",
+              "createdAt": "2021-09-01T06:56:18Z",
+              "updatedAt": "2021-09-07T06:14:43Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NzQ3NTg1NTk2",
+          "commit": {
+            "abbreviatedOid": "3ead32f"
+          },
+          "author": "larseggert",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-09-07T06:25:11Z",
+          "updatedAt": "2021-09-07T06:25:12Z",
+          "comments": [
+            {
+              "originalPosition": 13,
+              "body": "```suggestion\r\nobsoleting RFC 8312.  This also requires updating RFC 5681, to allow\r\n```",
+              "createdAt": "2021-09-07T06:25:11Z",
+              "updatedAt": "2021-09-07T06:25:12Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NzQ3NTg3NzY2",
+          "commit": {
+            "abbreviatedOid": "c16bb18"
+          },
+          "author": "goelvidhi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2021-09-07T06:28:38Z",
+          "updatedAt": "2021-09-07T06:28:38Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 107,
       "id": "MDExOlB1bGxSZXF1ZXN0NzI4MDM2NTIx",
       "title": "Fix #106",
       "url": "https://github.com/NTAP/rfc8312bis/pull/107",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "larseggert",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2021-09-06T15:08:16Z",
-      "updatedAt": "2021-09-06T15:16:42Z",
+      "updatedAt": "2021-09-07T06:24:31Z",
       "baseRepository": "NTAP/rfc8312bis",
       "baseRefName": "main",
       "baseRefOid": "b06cef3554e9d95cd0b78d46459ecb4a43bef608",
       "headRepository": "NTAP/rfc8312bis",
       "headRefName": "fix-math",
       "headRefOid": "c1143b04466e9600df4131560bac777e3494093a",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2021-09-07T06:24:27Z",
+      "mergedAt": "2021-09-07T06:24:27Z",
+      "mergedBy": "larseggert",
+      "mergeCommit": {
+        "oid": "0ec2059b176effa3781aba2bcd36c111faed448a"
+      },
       "comments": [],
       "reviews": [
         {
@@ -8792,6 +8929,19 @@
           "body": "Thanks.",
           "createdAt": "2021-09-06T15:16:42Z",
           "updatedAt": "2021-09-06T15:16:42Z",
+          "comments": []
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NzQ3NTc4NzIx",
+          "commit": {
+            "abbreviatedOid": "c1143b0"
+          },
+          "author": "goelvidhi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2021-09-07T06:14:10Z",
+          "updatedAt": "2021-09-07T06:14:10Z",
           "comments": []
         }
       ]
