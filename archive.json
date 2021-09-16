@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2021-09-09T00:01:04.301570+00:00",
+  "timestamp": "2021-09-16T00:01:07.771983+00:00",
   "repo": "NTAP/rfc8312bis",
   "labels": [
     {
@@ -2993,9 +2993,31 @@
       "labels": [],
       "body": "Markku Kojo said,\r\n> RFC 8311 (sec 4.1) allows modifying the TCP-sender response to\r\n  ECE for experimental purposes only. Has there been any discussion\r\n  with tsvwg in that modifying the TCP-response to ECE in CUBIC is\r\n  conflict with RFC 8311 as CUBIC is currently intended to become\r\n  a Standards Track RFC?",
       "createdAt": "2021-08-31T08:08:32Z",
-      "updatedAt": "2021-09-01T06:57:00Z",
+      "updatedAt": "2021-09-15T14:49:34Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "goelvidhi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@markkukojo CUBIC follows RFC 3168's below requirement,\r\n> The indication\r\n   of congestion should be treated just as a congestion loss in non-\r\n   ECN-Capable TCP.\r\n\r\nSure, it doesn't half the congestion window but the response to classic ECN is to behave same as loss.\r\nOTOH, RFC 8311 intends to allow experiments that treat CE markings different from loss by free'ing up the ECT(1) IP code-point. As CUBIC treats ECE flag and packet loss in the same way, it doesn't have anything to do with RFC 8311.",
+          "createdAt": "2021-09-14T07:19:06Z",
+          "updatedAt": "2021-09-14T07:19:16Z"
+        },
+        {
+          "author": "bbriscoe",
+          "authorAssociation": "NONE",
+          "body": "I agree. The scope of RFC8311 is solely changes to ECN, whereas RFC8312bis changes the response to drop, and consequently also the response to ECN in order to continue to comply with stds track [RFC3168 \u00a75](https://datatracker.ietf.org/doc/html/rfc3168#section-5):\r\n>   Upon the receipt by an ECN-Capable transport of a single CE packet,\r\n>   the congestion control algorithms followed at the end-systems MUST be\r\n>   essentially the same as the congestion control response to a *single*\r\n>   dropped packet.  For example, for ECN-Capable TCP the source TCP is\r\n>   required to halve its congestion window for any window of data\r\n>   containing either a packet drop or an ECN indication.\r\n\r\nThe first sentence gives the normative requirement. The second sentence isn't normative, because later RFC3168 says it assumes the standard congestion response is defined elsewhere; specifically \u00a76.1 of RFC3168 says:\r\n>  We assume that the source TCP uses the standard congestion\r\n>   control algorithms of Slow-start, Fast Retransmit and Fast Recovery\r\n>   [RFC2581]. \r\n\r\nTherefore, it would be compatible with RFC3168 for a sender to follow the congestion response of a different stds track RFC, such as the one RFC8312bis will define.\r\n\r\nRFC3168 mentions the halving again later, and again doesn't make it normative, but does define a normative bound on the response (that it MUST not increase), see [RFC3168 \u00a76.1.2](https://datatracker.ietf.org/doc/html/rfc3168#section-6.1.2):\r\n>  The indication\r\n>   of congestion should be treated just as a congestion loss in non-\r\n>   ECN-Capable TCP. That is, the TCP source halves the congestion window\r\n>   \"cwnd\" and reduces the slow start threshold \"ssthresh\".  The sending\r\n>   TCP SHOULD NOT increase the congestion window in response to the\r\n>   receipt of an ECN-Echo ACK packet.\r\n\r\nFinally, even if RFC8311 were relevant, when it updates \u00a75 of RFC3168 (quoted above) by adding:\r\n>  unless otherwise\r\n>   specified by an Experimental RFC in the IETF document stream\r\n\r\n...that merely allows experimental RFCs to define different congestion responses without having to update RFC3168 (because an exp track RFC cannot update a stds track RFC). That is the stated purpose of RFC8311. It doesn't need to say that a stds track RFC can update RFC3168, because nothing prevents the IETF updating a stds track RFC with another stds track RFC.\r\n\r\nAssuming I'm correct, I suggest this issue is just closed with no action.\r\n",
+          "createdAt": "2021-09-15T07:52:49Z",
+          "updatedAt": "2021-09-15T09:42:51Z"
+        },
+        {
+          "author": "larseggert",
+          "authorAssociation": "MEMBER",
+          "body": "@markkukojo do you agree to close with no action based on the above?",
+          "createdAt": "2021-09-15T14:49:34Z",
+          "updatedAt": "2021-09-15T14:49:34Z"
+        }
+      ]
     },
     {
       "number": 85,
@@ -3011,9 +3033,31 @@
       "labels": [],
       "body": "Markku Kojo said,\r\n> ABE (RFC 8511) is currently the only experimental RFC to modify\r\n  the TCP-sender response to ECE. ABE allows modifying multiplicative\r\n  decrease factor only for AIMD TCP and only when ECE arrives in\r\n  congestion avoidance, that is, not when the sender is in slow-start.\r\n>\r\n>  Applying a decrease factor of 0.7 (or higher) when a congestion\r\n  singnal arrives and ends the initial slow start would be\r\n  inconsiderate because it extends the convergence time from\r\n  the slow-start overshoot. ABE has found that using a larger decrease\r\n  factor yields performance improvement when applied in congestion\r\n  avoidance, but not otherwise. Do we have data that would support\r\n  different findings with CUBIC?",
       "createdAt": "2021-08-31T08:13:28Z",
-      "updatedAt": "2021-09-01T06:57:10Z",
+      "updatedAt": "2021-09-15T16:54:35Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "bbriscoe",
+          "authorAssociation": "NONE",
+          "body": "Markku raises a good question about how large the first reduction should be to come out of the flow-startup phase. Most cubic implementations resolve this by using a start-up algo that intends to overshoot by less than 2x, so that a reduction of 30% will usually be sufficient without another round.\r\n\r\n[\u00a7 4.10 of the rfc8312bis draft](https://datatracker.ietf.org/doc/html/draft-ietf-tcpm-rfc8312bis#section-4.10) mentions LSS, Hystart and standard RFC5681 SS.\r\n\r\nIf the draft did not mention RFC5681 slow-start as an option, I think this would resolve the matter (given I believe no Cubic implementations use it). It also ought to list the Hystart++ draft as the first option, given it is currently adopted  for the stds track, so it has potentially higher IETF 'status' than LSS (EXP) or Hystart (research paper).",
+          "createdAt": "2021-09-15T08:21:38Z",
+          "updatedAt": "2021-09-15T08:21:38Z"
+        },
+        {
+          "author": "goelvidhi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@bbriscoe Has Hystart++ been adopted (stds track), I thought this was a verbal consensus in last IETF (111).\r\n\r\nI can rearrange the order starting with Hystart++, then LSS. As Hystart++ is an update to Hystart paper, I think we should mention it some way - not sure how. \r\nRegarding mentioning 5681, I think there are some implementations that still use it, it doesn't mean that's the right thing to put in a RFC. But currently, 5681 is the only approved standards track RFC. So, maybe we can keep that and mention the overshoot issue that comes with it.",
+          "createdAt": "2021-09-15T16:25:23Z",
+          "updatedAt": "2021-09-15T16:25:43Z"
+        },
+        {
+          "author": "larseggert",
+          "authorAssociation": "MEMBER",
+          "body": "https://datatracker.ietf.org/doc/draft-ietf-tcpm-hystartplusplus/ exists and says `Intended status: Standards Track` in the document. But the datatracker doesn't have that reflected (yet). ",
+          "createdAt": "2021-09-15T16:54:35Z",
+          "updatedAt": "2021-09-15T16:54:35Z"
+        }
+      ]
     },
     {
       "number": 86,
@@ -3029,9 +3073,17 @@
       "labels": [],
       "body": "Markku Kojo said,\r\n> The larger decrease factor of 0.7 seems unadviseable also if\r\n  used in the initial slow start with loss based congestion\r\n  control (w/ Not-ECT traffic); packets start getting dropped\r\n  when a TCP sender has increased cwnd in slow start such that\r\n  the available network bandwidth and buffering capacity at the\r\n  bottleneck is filled, but the TCP sender continues sending\r\n  more packets for one RTT doubling cwnd and hence also the number\r\n  of packets inflight before the congestion signal reaches the sender.\r\n  Now, even if the sender uses the standard decrease factor of 0.5,\r\n  the cwnd gets reduced only to a value that equals to the cwnd just\r\n  before (or around) the congestion point. That is, the network is\r\n  still full when the sender enters fast recovery but we do not\r\n  expect more drops during fast recovery in a deterministic model.\r\n  Only in congestion avoidance after the recovery, the sender\r\n  increases cwnd again and gets a packet drop that takes the\r\n  sender to a normal sawtooth cycle in an ideal case. So, the\r\n  convergence time from slow-start is expexted to be fast though\r\n  in reality loss recovery does not always work ideally with\r\n  such many drops in a window of data.\r\n>\r\n>  However, if the sender applies decrease factor of 0.7, it\r\n  continues in fast recovery with a 40% higher cwnd than what is\r\n  the available network capacity. This is very likely to result in\r\n  significant number of packet losses during fast recovery, and\r\n  very likely to result in loss of retransmissions. So, it is no\r\n  wonder that so many people have been very concerned about the\r\n  slow-start overshoot and the problems it creates.\r\n  It is very obvious that applying decrease factor of 0.7 in\r\n  the initial slow start is likely to extend the convergence\r\n  time from the slow-start overshoot significantly. Or, do we\r\n  have data that shows that such concern is unnecessary?\r\n  Also, a number of new loss-recovery mechanisms have been\r\n  introduced maybe mainly because of this?\r\n  I would hesitate recommending decrease factor of 0.7 when\r\n  a congestion event occurs during the initial slow start.",
       "createdAt": "2021-08-31T08:15:52Z",
-      "updatedAt": "2021-09-01T06:57:37Z",
+      "updatedAt": "2021-09-15T09:26:57Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "bbriscoe",
+          "authorAssociation": "NONE",
+          "body": "[Same response as for Issue #85](https://github.com/NTAP/rfc8312bis/issues/85#issuecomment-919805852).\r\n\r\nI suggest #85 and #86 are folded into one issue.",
+          "createdAt": "2021-09-15T09:26:57Z",
+          "updatedAt": "2021-09-15T09:26:57Z"
+        }
+      ]
     },
     {
       "number": 87,
@@ -3047,9 +3099,31 @@
       "labels": [],
       "body": "Markku Kojo said,\r\n> The draft states that RACK (and QUIC loss detection) can be used\r\n  with CUBIC to detect losses. However, it seems to have gone\r\n  unnoticed that RACK may also detect loss of a retransmission in\r\n  which case the congestion control response is required to be taken\r\n  twice, i.e., ssthresh and cwnd must be lowered again (MUST in\r\n  RFC 5681 Sec. 4.3). Once RACK got published all new congestion\r\n  controls and updates to existing RFCs must include this essential\r\n  congestion control response, if the congestion control mechanism\r\n  intends to use RACK for loss detection.\r\n>\r\n>  This draft does not have any such requirement nor does it specify\r\n  how this is done?",
       "createdAt": "2021-08-31T08:19:05Z",
-      "updatedAt": "2021-09-01T06:58:04Z",
+      "updatedAt": "2021-09-15T23:30:37Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "bbriscoe",
+          "authorAssociation": "NONE",
+          "body": "RACK detects a loss whether retransmission or not, and [\u00a73.4 of RACK [RFC8985]](https://datatracker.ietf.org/doc/html/rfc8985#section-3.4) says:\r\n>   Note that [RFC5681] mandates a\r\n>   principle that loss in two successive windows of data or the loss of\r\n>   a retransmission must be taken as two indications of congestion and\r\n>   therefore results in two separate congestion control reactions.\r\n\r\nSo surely it's not right to say \"all new congestion controls and updates to existing RFCs must include this essential congestion control response.\" A congestion control that uses RACK surely doesn't need to say anything special about lost retransmission, because just referring to the RACK RFC will be enough.\r\n\r\nIf I'm right, I suggest this issue is just closed with no action.",
+          "createdAt": "2021-09-15T09:41:06Z",
+          "updatedAt": "2021-09-15T09:41:34Z"
+        },
+        {
+          "author": "larseggert",
+          "authorAssociation": "MEMBER",
+          "body": "@markkukojo are you OK with the resolution @bbriscoe proposes?",
+          "createdAt": "2021-09-15T14:12:32Z",
+          "updatedAt": "2021-09-15T14:12:32Z"
+        },
+        {
+          "author": "goelvidhi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "In addition to what Bob said, a packet loss whether of original packet or of a retransmission - both are considered loss. So, ssthresh and cwnd will be reduced twice. And as Bob said just mentioning RACK as a method to detect loss should be enough.\r\n> After a window reduction in response to a congestion event detected by duplicate ACKs, Explicit Congestion Notification-Echo (ECN-Echo, ECE) ACKs {{!RFC3168}}, TCP RACK {{!RFC8985}} or QUIC loss detection {{!RFC9002}}",
+          "createdAt": "2021-09-15T23:29:31Z",
+          "updatedAt": "2021-09-15T23:30:37Z"
+        }
+      ]
     },
     {
       "number": 88,
@@ -3083,16 +3157,38 @@
       "labels": [],
       "body": "Markku Kojo said,\r\n>This draft uses a larger cwnd decrease factor, resulting in larger\r\n  average cwnd and buffer occupation. This means that it is\r\n  likely to contribute significantly to buffer bloat, particularly\r\n  when considering also the use of concave increase function in the\r\n  beginning of the congestion avoidance that keeps the cwnd close\r\n  to maximum most of the time as carefully explained in the draft.\r\n  This means that CUBIC keeps also buffer bloated router queues\r\n  very efficiently full at all times.\r\n>\r\n>  Currently the draft does mention the slower convergence speed\r\n  as the only side effect for the larger decrease factor and does\r\n  not discuss the contribution to buffer bloat. It would be\r\n  important to assess this together with measurement data to\r\n  back up any observations.\r\n>\r\n>  Do we have data in different environments, including buffer-bloated\r\n  environments that show how much effect CUBIC has compared to\r\n  AIMD TCP?\r\n  And, how does larger decrease function impact convergence speed,\r\n  particularly in buffer-bloated environments.\r\n  Many people have complained that window-based (TCP) congestion\r\n  control drives buffer bloat. Of course, also the current standard\r\n  AIMD TCP tends to fill in the buffer-bloated queues but it\r\n  unlikely does it as effectively as CUBIC? This would be good to\r\n  understand better.",
       "createdAt": "2021-08-31T08:23:34Z",
-      "updatedAt": "2021-09-01T14:26:24Z",
+      "updatedAt": "2021-09-15T10:26:32Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "goelvidhi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@markkukojo,\r\n@bbriscoe pointed me to this paper https://www.simula.no/sites/default/files/publications/Simula.simula.618.pdf. If you look at Figure 7, CUBIC has a much lower `queuing delay variation` than New Reno which means that CUBIC has a shallower saw-teeth than New Reno. But as you said, due to higher \u03b2 (0.7) and concave increase function, CUBIC can reach W_max faster. This means that although in this paper, CUBIC shows a higher queuing delay than New Reno, this can be easily solved by configuring a lower threshold/interval for loss / ECN at the bottleneck AQM which would make CUBIC perform decreases more often without losing link utilization as significantly (as compared to New Reno). This would also help to solve buffer bloat better than New Reno.",
+          "createdAt": "2021-09-14T07:31:20Z",
+          "updatedAt": "2021-09-14T07:32:28Z"
+        },
+        {
+          "author": "bbriscoe",
+          "authorAssociation": "NONE",
+          "body": "I would add to Vidhi's comment by explaining that network operators are not expected to 'solve' this issue by setting a lower AQM threshold wherever Cubic is used (which is clearly impractical, but might be how someone awkward could interpret Vidhi's words). Nonetheless, widespread deployment of Cubic (2006+ timeframe) gives more scope for setting AQM thresholds lower for the same utilization. Indeed, the subsequent round of AQM implementations (2012+ timeframe) could set AQM thresholds to a lower default than if Reno had still been widely deployed.\r\n\r\nI don't think 'bufferbloat' is even the right word for an AQM that is set for the amplitude of Reno's sawteeth rather than Cubic's. Bloat implies excessively large, not just a little too large.\r\n\r\nThe lesson here is that we need to be careful attributing blame. Once AQMs are deployed to address real bufferbloat, the root cause of the residual 'bufferbloat' is not in the buffer, it's in the large variations of congestion control sawteeth (in slow-start as well as congestion avoidance). It is inappropriate to blame Cubic for squeezing the sawteeth up nearer to the threshold - the blame for the threshold needing to be that high in the first place falls on the predecessor to Cubic (Reno).\r\n\r\nShould the draft say something about this? I think it should (briefly - to counter any future criticism similar to Markku's). But that would require a new section. It doesn't fit under any of the headings in the existing 'Discussion' section, which follows the structure suggested by RFC5033. But not saying anything would also be OK for me.\r\n\r\n",
+          "createdAt": "2021-09-15T10:21:04Z",
+          "updatedAt": "2021-09-15T10:21:04Z"
+        },
+        {
+          "author": "bbriscoe",
+          "authorAssociation": "NONE",
+          "body": "Regarding slower convergence, the same section could also say that the smaller reduction per round (larger \u03b2) means that it takes more rounds to reduce in response to continuing congestion or another flow trying to push in. Nonetheless, convergence speed prior to Cubic was primarily limited by the slow additive increase of Reno, which can be faster once Cubic gets into true Cubic mode.\r\n",
+          "createdAt": "2021-09-15T10:26:32Z",
+          "updatedAt": "2021-09-15T10:26:32Z"
+        }
+      ]
     },
     {
       "number": 90,
       "id": "MDU6SXNzdWU5ODM1ODU0NTM=",
       "title": "Citing Experimental RFCs as if being a part of CUBIC",
       "url": "https://github.com/NTAP/rfc8312bis/issues/90",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "goelvidhi",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -3103,8 +3199,8 @@
       ],
       "body": "Markku Kojo said,\r\n> The draft says that CUBIC MAY implement DSACK [RFC3708], limited slow\r\n  start [RFC 3742], [RFC7661] and hybrid slow start [cites a paper].\r\n  Aren't the first three down references? Not sure if it is appropriate\r\n  for a Stds Track document to cite experimental work or a paper like\r\n  this even though it's a MAY.",
       "createdAt": "2021-08-31T08:24:27Z",
-      "updatedAt": "2021-08-31T12:34:34Z",
-      "closedAt": null,
+      "updatedAt": "2021-09-15T14:48:46Z",
+      "closedAt": "2021-09-15T14:48:46Z",
       "comments": [
         {
           "author": "larseggert",
@@ -3112,6 +3208,13 @@
           "body": "These references are all **informational**, which means they are not DOWNREFs by definition (see [RFC3967)](https://datatracker.ietf.org/doc/html/rfc3967).\r\n\r\nPropose to close with no action. Markku?",
           "createdAt": "2021-08-31T12:34:07Z",
           "updatedAt": "2021-08-31T12:34:07Z"
+        },
+        {
+          "author": "larseggert",
+          "authorAssociation": "MEMBER",
+          "body": "No word from @markkukojo, closing this. @markkukojo, please reopen if you disagree.",
+          "createdAt": "2021-09-15T14:48:46Z",
+          "updatedAt": "2021-09-15T14:48:46Z"
         }
       ]
     },
@@ -3183,9 +3286,24 @@
       "labels": [],
       "body": "[Markku Kojo said](https://mailarchive.ietf.org/arch/msg/tcpm/nd4Af8QRQMDkp_R_9ZQMkI4yGAc):\r\n>Sec 5.4\r\n>\r\n>The text correctly states that CUBIC fills queues faster than AIMD TCP and increases the risk of standing queues. Then it proposes queue sizing and AQM as a solution, which is odd. Applying AQM to keep the queues shorter of course decreases the RTT (delay) seen but it does not help with standing queues (they remain standing but are just shorter).",
       "createdAt": "2021-08-31T10:50:22Z",
-      "updatedAt": "2021-09-01T14:22:53Z",
+      "updatedAt": "2021-09-15T14:11:46Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "bbriscoe",
+          "authorAssociation": "NONE",
+          "body": "The discussion under issue #89 is relevant here.\r\n\r\nAQMs help to reduce and in some cases remove the standing queue. An AQM target has to allow for different amplitude sawteeth for different RTTs. In true cubic mode, the brief downward excursions mean that utilization is less sensitive to an AQM target that is lower than the amplitude of the whole sawtooth - it only causes minor underutilization. So the combination of AQMs and true Cubic mode really does help _remove_ standing queues, not just reduce them.\r\n\r\nAnyway, the draft doesn't say that AQMs remove standing queues. \r\n\r\nSo, I think the draft is correct to point to AQM as a solution to the case of large buffers under 'difficult environments', and the authors might want to add something about the lower sensitivity to under-configured AQM targets, as above.\r\n\r\nNonetheless, I would criticize this section for not really addressing the 'difficult environments' that RFC5033 was talking about: \r\n\r\n- Radio: Cubic is pretty poor on fast adaptation, but still better than Reno. So I don't think we're going to find a reference that praises Cubic in this respect. Therefore, I suggest a sentence admitting Cubic isn't much better than Reno over radio links would be appropriate here. Slides [2](https://bobbriscoe.net/presents/1707ietf/1707tcp-prague-scaling-tensions.pdf#page=2) & [3](https://bobbriscoe.net/presents/1707ietf/1707tcp-prague-scaling-tensions.pdf#page=3) of an iccrg presentation we did summarize the wider problem of the slow adaptation of Cubic in radio environments, but again, other CCs are little better - the next slide moves on to Compound TCP for instance. A reference to [Liu16] would be worthwhile - it's the best paper I've read on the problems TCP CCs have over mobile (and Cubic specifically), and it identifies one major contributor to the problems (receive-window related so not specific to Cubic). \r\n- Multipath: No issue here relative to Reno AFAICT. No need to mention.\r\n- Tunnels, L2 AQMs, etc: No issue here for a loss-based CC. And any issues with ECN would be no different for Cubic relative to Reno. No need to mention.\r\n- High BDP: Surely this would be the place to call out Cubic's main strength.\r\n- Significantly slow links: No issue here relative to Reno AFAICT (assuming issue #83 is resolved).\r\n\r\n[Liu16] K. Liu and J. Y. B. Lee, \"On Improving TCP Performance over Mobile Data Networks,\" IEEE Transactions on Mobile Computing, 2016.",
+          "createdAt": "2021-09-15T11:26:55Z",
+          "updatedAt": "2021-09-15T11:26:55Z"
+        },
+        {
+          "author": "larseggert",
+          "authorAssociation": "MEMBER",
+          "body": "@bbriscoe: would you want to propose a PR that captures your considerations?",
+          "createdAt": "2021-09-15T14:11:46Z",
+          "updatedAt": "2021-09-15T14:11:46Z"
+        }
+      ]
     },
     {
       "number": 95,
@@ -3232,9 +3350,17 @@
       "labels": [],
       "body": "[Markku Kojo said](https://mailarchive.ietf.org/arch/msg/tcpm/nd4Af8QRQMDkp_R_9ZQMkI4yGAc):\r\n>Sec 5.6\r\n>\r\n>Competing CUBIC flows will converge but it happens very slowly and requires a large amount of data to send, i.e., short flows are more unlikely to live long enough to converge. This seems to be case at least according to the results in original paper [HRX08, Fig 4 b].\r\nSummary and citing some performance data would be very useful and much more convincing.",
       "createdAt": "2021-08-31T10:51:06Z",
-      "updatedAt": "2021-09-01T14:16:35Z",
+      "updatedAt": "2021-09-15T11:31:55Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "bbriscoe",
+          "authorAssociation": "NONE",
+          "body": "See [my comment](https://github.com/NTAP/rfc8312bis/issues/89#issuecomment-919896820) under #89, part of which duplicates this issue.",
+          "createdAt": "2021-09-15T11:31:55Z",
+          "updatedAt": "2021-09-15T11:31:55Z"
+        }
+      ]
     },
     {
       "number": 97,
@@ -3250,9 +3376,24 @@
       "labels": [],
       "body": "[Markku Kojo said](https://mailarchive.ietf.org/arch/msg/tcpm/nd4Af8QRQMDkp_R_9ZQMkI4yGAc):\r\n>Sec 5.8\r\n>\r\n>The MUST NOT requirement would be much better placed with other specifications in Sec 4 and would benefit from more accurate description.",
       "createdAt": "2021-08-31T10:51:32Z",
-      "updatedAt": "2021-09-01T14:15:54Z",
+      "updatedAt": "2021-09-15T14:11:02Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "bbriscoe",
+          "authorAssociation": "NONE",
+          "body": "I agree with Markku, that it would be best to move this 'MUST NOT' out of the discussion section to where it will be noticed by implementers.",
+          "createdAt": "2021-09-15T11:34:15Z",
+          "updatedAt": "2021-09-15T11:34:15Z"
+        },
+        {
+          "author": "larseggert",
+          "authorAssociation": "MEMBER",
+          "body": "@bbriscoe @markkukojo: would one of you want to propose a PR?",
+          "createdAt": "2021-09-15T14:11:02Z",
+          "updatedAt": "2021-09-15T14:11:02Z"
+        }
+      ]
     },
     {
       "number": 98,
@@ -3268,16 +3409,31 @@
       "labels": [],
       "body": "[Markku Kojo said](https://mailarchive.ietf.org/arch/msg/tcpm/nd4Af8QRQMDkp_R_9ZQMkI4yGAc):\r\n>Sec 5.9\r\n>\r\n>The statement made here is not convincing and is likely to be incorrect. E.g., CUBIC with larger decrease factor would most likely release capacity notably slower than AIMD TCP if there is sudden congestion.\r\n\r\n",
       "createdAt": "2021-08-31T10:51:53Z",
-      "updatedAt": "2021-09-01T14:14:35Z",
+      "updatedAt": "2021-09-15T14:10:49Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "bbriscoe",
+          "authorAssociation": "NONE",
+          "body": "I agree with Markku that the claim in the draft seems incorrect. Even with fast convergence, each reduction is a little less than Reno. It just needs to admit the difference, rather than saying there is no difference.",
+          "createdAt": "2021-09-15T11:43:12Z",
+          "updatedAt": "2021-09-15T11:43:12Z"
+        },
+        {
+          "author": "larseggert",
+          "authorAssociation": "MEMBER",
+          "body": "@bbriscoe @markkukojo: would one of you want to propose a PR?",
+          "createdAt": "2021-09-15T14:10:48Z",
+          "updatedAt": "2021-09-15T14:10:48Z"
+        }
+      ]
     },
     {
       "number": 99,
       "id": "MDU6SXNzdWU5ODM3MjEzMDA=",
       "title": "Section 8",
       "url": "https://github.com/NTAP/rfc8312bis/issues/99",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "larseggert",
       "authorAssociation": "MEMBER",
       "assignees": [
@@ -3286,8 +3442,8 @@
       "labels": [],
       "body": "[Markku Kojo said](https://mailarchive.ietf.org/arch/msg/tcpm/nd4Af8QRQMDkp_R_9ZQMkI4yGAc):\r\n> The draft says in the intro that CUBIC is to be regarded as *current standard* for TCP congestion control. It sounds a bit like it would obsolete RFC 5681 which is not the intent. RFC 5681 still has its specific role as the document that gives the baseline and generic guidelines for TCP (and other) congestion control.\r\nInstead, I think this document should articulate very carefully its role among the congestion control algorithms. How, I am not sure. Maybe simply as an alternative for RFC5681 congestion avoidance and multiplicative decrease.\r\n>\r\n>Please note also that when specifying these algorithms this document is\r\nin direct conflict with a MUST in RFC5681 which says: \"however, a TCP MUST NOT be more aggressive than the following algorithms allow (that is, MUST NOT send data when the value of cwnd computed by the following algorithms would not allow the data to be sent).\"\r\nTherefore, the draft should make this differentation very clear maybe already in the abstract and justify the deviations much better than it currently does (accompanied with evidence = data). This is very important i order to make a convincing case why it is ok for this doc to deviate from the current Standards Track TCP normative statements.",
       "createdAt": "2021-08-31T10:52:36Z",
-      "updatedAt": "2021-08-31T13:17:07Z",
-      "closedAt": null,
+      "updatedAt": "2021-09-15T14:46:16Z",
+      "closedAt": "2021-09-15T14:46:16Z",
       "comments": [
         {
           "author": "larseggert",
@@ -3303,7 +3459,7 @@
       "id": "MDU6SXNzdWU5ODM3MjE3MDA=",
       "title": "epoch_start",
       "url": "https://github.com/NTAP/rfc8312bis/issues/100",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "larseggert",
       "authorAssociation": "MEMBER",
       "assignees": [
@@ -3312,8 +3468,8 @@
       "labels": [],
       "body": "[Markku Kojo said](https://mailarchive.ietf.org/arch/msg/tcpm/nd4Af8QRQMDkp_R_9ZQMkI4yGAc):\r\n>_epoch_start_: needs more accurate and consistent definition when the exactly the epoch starts. Is it when congestion event occurs or when TSP sender enters congestion avoidance first time after an congestion event. If it is  different in different scenarios that would be good to present systematically.\r\n",
       "createdAt": "2021-08-31T10:53:06Z",
-      "updatedAt": "2021-09-08T04:27:55Z",
-      "closedAt": null,
+      "updatedAt": "2021-09-15T14:47:45Z",
+      "closedAt": "2021-09-15T14:47:45Z",
       "comments": [
         {
           "author": "goelvidhi",
@@ -3335,6 +3491,13 @@
           "body": "@markkukojo, could you please let us know?",
           "createdAt": "2021-09-08T04:27:55Z",
           "updatedAt": "2021-09-08T04:27:55Z"
+        },
+        {
+          "author": "larseggert",
+          "authorAssociation": "MEMBER",
+          "body": "No word from @markkukojo, closing this. @markkukojo, please reopen if you disagree.",
+          "createdAt": "2021-09-15T14:47:45Z",
+          "updatedAt": "2021-09-15T14:47:45Z"
         }
       ]
     },
@@ -3352,7 +3515,7 @@
       "labels": [],
       "body": "[Markku Kojo said](https://mailarchive.ietf.org/arch/msg/tcpm/nd4Af8QRQMDkp_R_9ZQMkI4yGAc):\r\n>In many occassions:\r\n>\r\n>\"(upon receiving) an ACK\" -> \"(upon receiving) a new ACK\"",
       "createdAt": "2021-08-31T10:53:32Z",
-      "updatedAt": "2021-08-31T12:41:15Z",
+      "updatedAt": "2021-09-15T18:16:27Z",
       "closedAt": null,
       "comments": [
         {
@@ -3361,6 +3524,13 @@
           "body": "Markku, #103 only fixes the one spot where the text said \"Upon receiving an ACK\". There are **many* more places where we use \"an ACK\" - which of those do you think need to be changed? ",
           "createdAt": "2021-08-31T12:41:03Z",
           "updatedAt": "2021-08-31T12:41:03Z"
+        },
+        {
+          "author": "markkukojo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I didn't pass through all occurrences because this was a generic comment to be precise. So, throughout the document any occurrence of \"an/every/each ACK\" that is intended to refer only to an ACK that cumulatively acknowledges new data would be good to indicate exactly (to not leave any doubt that the actions must not be taken on arriving dupAcks or window updates).",
+          "createdAt": "2021-09-15T16:26:39Z",
+          "updatedAt": "2021-09-15T16:26:39Z"
         }
       ]
     },
@@ -3406,6 +3576,22 @@
       "createdAt": "2021-09-06T15:02:41Z",
       "updatedAt": "2021-09-07T06:24:27Z",
       "closedAt": "2021-09-07T06:24:27Z",
+      "comments": []
+    },
+    {
+      "number": 108,
+      "id": "I_kwDOEpK-U847cBix",
+      "title": "AIMD -> Reno",
+      "url": "https://github.com/NTAP/rfc8312bis/issues/108",
+      "state": "OPEN",
+      "author": "larseggert",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Based on @bbriscoe's [email](https://mailarchive.ietf.org/arch/msg/tcpm/AYcFztqVPqZHj5s4UNIZmC-uAUI)",
+      "createdAt": "2021-09-15T15:11:25Z",
+      "updatedAt": "2021-09-15T15:11:25Z",
+      "closedAt": null,
       "comments": []
     }
   ],
@@ -8638,24 +8824,26 @@
       "id": "MDExOlB1bGxSZXF1ZXN0NzIzMzM0MzE1",
       "title": "upon receiving an ACK -> upon receiving a new ACK",
       "url": "https://github.com/NTAP/rfc8312bis/pull/103",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "larseggert",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "This fixes #101.\r\n\r\nHowever, I only changed the one spot where the text actually said \"Upon receiving an ACK\". There are **many** more places where the text says \"an ACK\" - Markku would need to identify a bit better which ones he thinks need to be changed. So I am leaving this as a draft PR until we know we changed them all.",
       "createdAt": "2021-08-31T12:39:52Z",
-      "updatedAt": "2021-09-02T12:39:16Z",
+      "updatedAt": "2021-09-15T17:01:50Z",
       "baseRepository": "NTAP/rfc8312bis",
       "baseRefName": "main",
       "baseRefOid": "b06cef3554e9d95cd0b78d46459ecb4a43bef608",
       "headRepository": "NTAP/rfc8312bis",
       "headRefName": "ack-new-ack",
       "headRefOid": "ff2d3bd344cd85a39f1b2ab76ba685114cd7c1d6",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2021-09-15T14:45:51Z",
+      "mergedAt": "2021-09-15T14:45:51Z",
+      "mergedBy": "larseggert",
+      "mergeCommit": {
+        "oid": "c70806f9af06ad949f0ad1b9f2149f870dd88168"
+      },
       "comments": [
         {
           "author": "goelvidhi",
@@ -8677,6 +8865,13 @@
           "body": "@markkukojo does this PR address your issue?",
           "createdAt": "2021-09-02T12:39:16Z",
           "updatedAt": "2021-09-02T12:39:16Z"
+        },
+        {
+          "author": "markkukojo",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I commented this accidentally in #101 that was already closed. So, repeating here not to leave it unnoticed.\r\n\r\nI didn't pass through all the occurrences because this was a generic comment for the document to be precise. So, throughout the document any occurrence of \"an/every/each/whatever ACK\" that is intended to refer only to an ACK that cumulatively acknowledges new data would be good to indicate exactly (to not leave any doubt that the actions must not be taken on arriving dupAcks or window updates).",
+          "createdAt": "2021-09-15T17:01:50Z",
+          "updatedAt": "2021-09-15T17:01:50Z"
         }
       ],
       "reviews": [
@@ -8700,24 +8895,26 @@
       "id": "MDExOlB1bGxSZXF1ZXN0NzIzMzM4ODQ0",
       "title": "current standard -> currently most widely deployed standard",
       "url": "https://github.com/NTAP/rfc8312bis/pull/104",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "larseggert",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2021-08-31T12:45:50Z",
-      "updatedAt": "2021-09-07T06:29:45Z",
+      "updatedAt": "2021-09-15T14:46:19Z",
       "baseRepository": "NTAP/rfc8312bis",
       "baseRefName": "main",
       "baseRefOid": "b06cef3554e9d95cd0b78d46459ecb4a43bef608",
       "headRepository": "NTAP/rfc8312bis",
       "headRefName": "current-standard",
       "headRefOid": "d360d2495cba49961a8ff42a1ceff8276b9213c0",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2021-09-15T14:46:16Z",
+      "mergedAt": "2021-09-15T14:46:16Z",
+      "mergedBy": "larseggert",
+      "mergeCommit": {
+        "oid": "0f190cbb35da12edaaa181f2d7d03052b24b4a79"
+      },
       "comments": [
         {
           "author": "larseggert",
@@ -8808,24 +9005,26 @@
       "id": "MDExOlB1bGxSZXF1ZXN0NzIzMzY1NTgw",
       "title": "Update 5681.",
       "url": "https://github.com/NTAP/rfc8312bis/pull/105",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "larseggert",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2021-08-31T13:16:31Z",
-      "updatedAt": "2021-09-07T06:28:38Z",
+      "updatedAt": "2021-09-15T14:46:41Z",
       "baseRepository": "NTAP/rfc8312bis",
       "baseRefName": "main",
       "baseRefOid": "b06cef3554e9d95cd0b78d46459ecb4a43bef608",
       "headRepository": "NTAP/rfc8312bis",
       "headRefName": "update-5681",
       "headRefOid": "c16bb18d019a597aa3fbf99276e39c2faebff184",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2021-09-15T14:46:37Z",
+      "mergedAt": "2021-09-15T14:46:37Z",
+      "mergedBy": "larseggert",
+      "mergeCommit": {
+        "oid": "fb9be62d3402913cb64e8931fa24f13a54c30188"
+      },
       "comments": [
         {
           "author": "larseggert",
@@ -8942,6 +9141,67 @@
           "body": "",
           "createdAt": "2021-09-07T06:14:10Z",
           "updatedAt": "2021-09-07T06:14:10Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 109,
+      "id": "PR_kwDOEpK-U84ryjGa",
+      "title": "AIMD -> Reno (in most places)",
+      "url": "https://github.com/NTAP/rfc8312bis/pull/109",
+      "state": "OPEN",
+      "author": "larseggert",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2021-09-15T15:19:03Z",
+      "updatedAt": "2021-09-15T17:15:06Z",
+      "baseRepository": "NTAP/rfc8312bis",
+      "baseRefName": "main",
+      "baseRefOid": "cfdf2a4130acb34e3ed39de082a9b1a7061523d8",
+      "headRepository": "NTAP/rfc8312bis",
+      "headRefName": "aimd-to-reno",
+      "headRefOid": "2a99c732abcbab182228d9a6ef23b629b3b66e02",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "lisongxu",
+          "authorAssociation": "COLLABORATOR",
+          "body": "sorry that I forgot to switch from my another github account. hinterop is me. ",
+          "createdAt": "2021-09-15T17:15:06Z",
+          "updatedAt": "2021-09-15T17:15:06Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOEpK-U84tBc9A",
+          "commit": {
+            "abbreviatedOid": "2a99c73"
+          },
+          "author": "goelvidhi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2021-09-15T16:36:27Z",
+          "updatedAt": "2021-09-15T16:36:27Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOEpK-U84tBpri",
+          "commit": {
+            "abbreviatedOid": "2a99c73"
+          },
+          "author": "hinterop",
+          "authorAssociation": "NONE",
+          "state": "CHANGES_REQUESTED",
+          "body": "How about we remove \"because they use..... \" in \"We refer to all Reno-style TCP standards and their variants collectively as \"Reno TCP\" below because they use the Additive Increase and Multiplicative Decrease algorithm (AIMD).\"?",
+          "createdAt": "2021-09-15T17:12:55Z",
+          "updatedAt": "2021-09-15T17:12:55Z",
           "comments": []
         }
       ]
