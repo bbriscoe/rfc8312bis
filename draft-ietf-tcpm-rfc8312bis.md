@@ -766,7 +766,7 @@ prior\_W\_{est} = W_{est} \\
 
 CUBIC MAY implement an algorithm to detect spurious retransmissions,
 such as Forward RTO-Recovery {{!RFC5682}}. Experimental alternatives
-include DSACK {{?RFC3708}}, or Eifel {{?RFC3522}}. Once a spurious
+include DSACK {{?RFC3708}} and Eifel {{?RFC3522}}. Once a spurious
 congestion event is detected, CUBIC SHOULD restore the original values
 of above-mentioned variables as follows if the current *cwnd* is lower
 than *prior_cwnd*. Restoring the original values ensures that CUBIC's
