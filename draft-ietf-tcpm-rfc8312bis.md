@@ -765,12 +765,12 @@ prior\_W\_{est} = W_{est} \\
 {: artwork-align="center" }
 
 CUBIC MAY implement an algorithm to detect spurious retransmissions,
-such as DSACK {{?RFC3708}}, Forward RTO-Recovery {{?RFC5682}} or Eifel
-{{?RFC3522}}. Once a spurious congestion event is detected, CUBIC
-SHOULD restore the original values of above-mentioned variables as
-follows if the current *cwnd* is lower than *prior_cwnd*. Restoring
-the original values ensures that CUBIC's performance is similar to
-what it would be without spurious losses.
+such as Forward RTO-Recovery {{!RFC5682}}. Experimental alternatives
+include DSACK {{?RFC3708}},  or Eifel{{?RFC3522}}. Once a spurious
+congestion event is detected, CUBIC SHOULD restore the original values
+of above-mentioned variables as follows if the current *cwnd* is lower
+than *prior_cwnd*. Restoring the original values ensures that CUBIC's
+performance is similar to what it would be without spurious losses.
 
 ~~~ math
 \left.
@@ -795,10 +795,10 @@ these variables.
 ## Slow Start
 
 CUBIC MUST employ a slow-start algorithm, when *cwnd* is no more than
-*ssthresh*. Among the slow-start algorithms, CUBIC MAY choose the AIMD
-TCP slow start {{!RFC5681}} in general networks, or the limited slow
-start {{?RFC3742}} or hybrid slow start {{HR08}} for fast and
-long-distance networks.
+*ssthresh*. CUBIC MAY use the current standard AIMD TCP slow start
+algorithm {{!RFC5681}} in general netwoks. For fast and long-distance
+networks, experimental alternatives to {{!RFC5681}} include limited
+slow start {{?RFC3742}} and hybrid slow start {{HR08}}.
 
 When CUBIC uses hybrid slow start {{HR08}}, it may exit the first slow
 start without incurring any packet loss and thus *W<sub>max</sub>* is
