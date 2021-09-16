@@ -743,18 +743,20 @@ W    = <
 4.10.  Slow Start
 
    CUBIC MUST employ a slow-start algorithm, when _cwnd_ is no more than
-   _ssthresh_. CUBIC MAY use the current standard AIMD TCP slow start
-   algorithm [RFC5681] in general netwoks.  For fast and long-distance
-   networks, experimental alternatives to [RFC5681] include limited slow
-   start [RFC3742] and hybrid slow start [HR08].
+   _ssthresh_. In general, CUBIC SHOULD use the HyStart++ slow start
+   algorithm [I-D.ietf-tcpm-hystartplusplus], or MAY use the AIMD TCP
+   slow start algorithm [RFC5681].  Experimental alternatives to
+   [RFC5681] include hybrid slow start [HR08], a predecessor to
+   HyStart++ that CUBIC implementations have used as the default for the
+   last decade, and limited slow start [RFC3742].
 
-   When CUBIC uses hybrid slow start [HR08], it may exit the first slow
-   start without incurring any packet loss and thus _W_max_ is
-   undefined.  In this special case, CUBIC switches to congestion
-   avoidance and increases its congestion window size using Figure 1,
-   where _t_ is the elapsed time since the beginning of the current
-   congestion avoidance, _K_ is set to 0, and _W_max_ is set to the
-   congestion window size at the beginning of the current congestion
+   When CUBIC uses HyStart++ [I-D.ietf-tcpm-hystartplusplus], it may
+   exit the first slow start without incurring any packet loss and thus
+   _W_max_ is undefined.  In this special case, CUBIC switches to
+   congestion avoidance and increases its congestion window size using
+   Figure 1, where _t_ is the elapsed time since the beginning of the
+   current congestion avoidance, _K_ is set to 0, and _W_max_ is set to
+   the congestion window size at the beginning of the current congestion
    avoidance stage.
 
 5.  Discussion
@@ -1005,6 +1007,13 @@ W    = <
 
 8.1.  Normative References
 
+   [I-D.ietf-tcpm-hystartplusplus]
+              Balasubramanian, P., Huang, Y., and M. Olson, "HyStart++:
+              Modified Slow Start for TCP", Work in Progress, Internet-
+              Draft, draft-ietf-tcpm-hystartplusplus-03, 25 July 2021,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-tcpm-
+              hystartplusplus-03>.
+
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
@@ -1183,6 +1192,10 @@ B.1.  Since draft-ietf-tcpm-rfc8312bis-04
 
    *  Update RFC5681 (#99 (https://github.com/NTAP/rfc8312bis/
       issues/99))
+
+   *  Rephrase text around algorithmic alternatives, add HyStart++ (#85
+      (https://github.com/NTAP/rfc8312bis/issues/85), #90
+      (https://github.com/NTAP/rfc8312bis/issues/90))
 
 B.2.  Since draft-ietf-tcpm-rfc8312bis-03
 
