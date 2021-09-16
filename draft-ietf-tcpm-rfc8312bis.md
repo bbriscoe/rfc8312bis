@@ -795,19 +795,21 @@ these variables.
 ## Slow Start
 
 CUBIC MUST employ a slow-start algorithm, when *cwnd* is no more than
-*ssthresh*. CUBIC MAY use the current standard AIMD TCP slow start
-algorithm {{!RFC5681}} in general netwoks. For fast and long-distance
-networks, experimental alternatives to {{!RFC5681}} include limited
-slow start {{?RFC3742}} and hybrid slow start {{HR08}}.
+*ssthresh*. In general, CUBIC SHOULD use the HyStart++ slow start
+algorithm {{!I-D.ietf-tcpm-hystartplusplus}}, or MAY use the AIMD TCP
+slow start algorithm {{!RFC5681}}. Experimental alternatives to
+{{!RFC5681}} include hybrid slow start {{HR08}}, a predecessor to
+HyStart++ that CUBIC implementations have used as the default for the
+last decade, and limited slow start {{?RFC3742}}.
 
-When CUBIC uses hybrid slow start {{HR08}}, it may exit the first slow
-start without incurring any packet loss and thus *W<sub>max</sub>* is
-undefined. In this special case, CUBIC switches to congestion
-avoidance and increases its congestion window size using {{eq1}},
-where *t* is the elapsed time since the beginning of the current
-congestion avoidance, *K* is set to 0, and *W<sub>max</sub>* is set to
-the congestion window size at the beginning of the current congestion
-avoidance stage.
+When CUBIC uses HyStart++ {{!I-D.ietf-tcpm-hystartplusplus}}, it may
+exit the first slow start without incurring any packet loss and
+thus *W<sub>max</sub>* is undefined. In this special case, CUBIC
+switches to congestion avoidance and increases its congestion window
+size using {{eq1}}, where *t* is the elapsed time since the beginning
+of the current congestion avoidance, *K* is set to 0,
+and *W<sub>max</sub>* is set to the congestion window size at the
+beginning of the current congestion avoidance stage.
 
 # Discussion {#discussion}
 
@@ -1031,6 +1033,9 @@ Richard Scheffenegger and Alexander Zimmermann originally co-authored
   ([#106](https://github.com/NTAP/rfc8312bis/issues/106))
 - Update RFC5681
   ([#99](https://github.com/NTAP/rfc8312bis/issues/99))
+- Rephrase text around algorithmic alternatives, add HyStart++
+  ([#85](https://github.com/NTAP/rfc8312bis/issues/85),
+  [#90](https://github.com/NTAP/rfc8312bis/issues/90))
 
 ## Since draft-ietf-tcpm-rfc8312bis-03
 
