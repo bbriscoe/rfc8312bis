@@ -7,12 +7,12 @@ Internet-Draft                                                       UNL
 Obsoletes: 8312 (if approved)                                      S. Ha
 Updates: 5681 (if approved)                                     Colorado
 Intended status: Standards Track                                 I. Rhee
-Expires: 20 March 2022                                            Bowery
+Expires: 25 March 2022                                            Bowery
                                                                  V. Goel
                                                               Apple Inc.
                                                           L. Eggert, Ed.
                                                                   NetApp
-                                                       16 September 2021
+                                                       21 September 2021
 
 
                CUBIC for Fast and Long-Distance Networks
@@ -72,7 +72,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 20 March 2022.
+   This Internet-Draft will expire on 25 March 2022.
 
 Copyright Notice
 
@@ -409,17 +409,18 @@ Table of Contents
    AIMD-friendly region, that is, an estimate for the congestion window
    of AIMD TCP.
 
-   _segments_acked_: Number of MSS-sized segments acked when an ACK is
-   received.  This number will be a decimal value when an ACK
+   _segments_acked_: Number of MSS-sized segments acked when a "new ACK"
+   is received, i.e., an ACK that cumulatively acknowledges the delivery
+   of new data.  This number will be a decimal value when a new ACK
    acknowledges an amount of data that is not MSS-sized.  Specifically,
-   it can be less than 1 when an ACK acknowledges a segment smaller than
-   the MSS.
+   it can be less than 1 when a new ACK acknowledges a segment smaller
+   than the MSS.
 
 4.2.  Window Increase Function
 
    CUBIC maintains the acknowledgment (ACK) clocking of AIMD TCP by
-   increasing the congestion window only at the reception of an ACK.  It
-   does not make any changes to the TCP Fast Recovery and Fast
+   increasing the congestion window only at the reception of a new ACK.
+   It does not make any changes to the TCP Fast Recovery and Fast
    Retransmit algorithms [RFC6582][RFC6675].
 
    During congestion avoidance, after a congestion event is detected by
@@ -536,17 +537,18 @@ Table of Contents
    receiving a new ACK in congestion avoidance (where _cwnd_ could be
    greater than or less than _W_max_), CUBIC checks whether W_cubic(_t_)
    is less than _W_est_. If so, CUBIC is in the AIMD-friendly region and
-   _cwnd_ SHOULD be set to _W_est_ at each reception of an ACK.
+   _cwnd_ SHOULD be set to _W_est_ at each reception of a new ACK.
 
    _W_est_ is set equal to _cwnd_start_ at the start of the congestion
-   avoidance stage.  After that, on every ACK, _W_est_ is updated using
-   Figure 4.  Note that this equation is for a connection where
+   avoidance stage.  After that, on every new ACK, _W_est_ is updated
+   using Figure 4.  Note that this equation is for a connection where
    Appropriate Byte Counting (ABC) [RFC3465] is disabled.  For a
    connection with ABC enabled, this equation SHOULD be adjusted by
    using the number of acknowledged bytes instead of acknowledged
    segments.  Also note that this equation works for connections with
    enabled or disabled Delayed ACKs [RFC5681], as _segments_acked_ will
-   be different based on the segments actually acknowledged by an ACK.
+   be different based on the segments actually acknowledged by a new
+   ACK.
 
                                           segments_acked
                    W    = W    + α      * --------------
@@ -571,8 +573,8 @@ Table of Contents
                                -------------
                                    cwnd
 
-   for each received ACK, where _target_ is calculated as described in
-   Section 4.2.
+   for each received new ACK, where _target_ is calculated as described
+   in Section 4.2.
 
 4.5.  Convex Region
 
@@ -597,8 +599,8 @@ Table of Contents
                                -------------
                                    cwnd
 
-   for each received ACK, where _target_ is calculated as described in
-   Section 4.2.
+   for each received new ACK, where _target_ is calculated as described
+   in Section 4.2.
 
 4.6.  Multiplicative Decrease
 
@@ -1182,6 +1184,9 @@ B.1.  Since draft-ietf-tcpm-rfc8312bis-04
 
    *  Update RFC5681 (#99 (https://github.com/NTAP/rfc8312bis/
       issues/99))
+
+   *  Clarify what we mean by "new ACK" and use it in the text in more
+      places. (#101 (https://github.com/NTAP/rfc8312bis/issues/101))
 
 B.2.  Since draft-ietf-tcpm-rfc8312bis-03
 
