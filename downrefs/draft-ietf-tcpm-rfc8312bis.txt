@@ -7,12 +7,12 @@ Internet-Draft                                                       UNL
 Obsoletes: 8312 (if approved)                                      S. Ha
 Updates: 5681 (if approved)                                     Colorado
 Intended status: Standards Track                                 I. Rhee
-Expires: 20 March 2022                                            Bowery
+Expires: 26 March 2022                                            Bowery
                                                                  V. Goel
                                                               Apple Inc.
                                                           L. Eggert, Ed.
                                                                   NetApp
-                                                       16 September 2021
+                                                       22 September 2021
 
 
                CUBIC for Fast and Long-Distance Networks
@@ -72,7 +72,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 20 March 2022.
+   This Internet-Draft will expire on 26 March 2022.
 
 Copyright Notice
 
@@ -745,10 +745,10 @@ W    = <
    CUBIC MUST employ a slow-start algorithm, when _cwnd_ is no more than
    _ssthresh_. In general, CUBIC SHOULD use the HyStart++ slow start
    algorithm [I-D.ietf-tcpm-hystartplusplus], or MAY use the AIMD TCP
-   slow start algorithm [RFC5681].  Experimental alternatives include
-   hybrid slow start [HR08], a predecessor to HyStart++ that CUBIC
-   implementations have used as the default for the last decade, and
-   limited slow start [RFC3742].
+   slow start algorithm [RFC5681] when HyStart++ is not suitable.
+   Experimental alternatives include hybrid slow start [HR08], a
+   predecessor to HyStart++ that CUBIC implementations have used as the
+   default for the last decade, and limited slow start [RFC3742].
 
    When CUBIC uses HyStart++ [I-D.ietf-tcpm-hystartplusplus], it may
    exit the first slow start without incurring any packet loss and thus
