@@ -207,9 +207,7 @@ applicable to all Reno-style TCP standards and their variants,
 including TCP-Reno {{!RFC5681}}, TCP-NewReno {{!RFC6582}}{{!RFC6675}},
 SCTP {{?RFC4960}}, and TFRC {{!RFC5348}}, which use the same linear
 increase function for window growth. We refer to all Reno-style TCP
-standards and their variants collectively as "Reno TCP" below because
-they use the Additive Increase and Multiplicative Decrease algorithm
-(AIMD).
+standards and their variants collectively as "Reno TCP" below.
 
 CUBIC, originally proposed in {{HRX08}}, is a modification to the
 congestion control algorithm of classical Reno TCP to remedy this
