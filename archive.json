@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2021-09-21T00:01:08.532441+00:00",
+  "timestamp": "2021-09-23T00:00:56.634977+00:00",
   "repo": "NTAP/rfc8312bis",
   "labels": [
     {
@@ -3033,7 +3033,7 @@
       "labels": [],
       "body": "Markku Kojo said,\r\n> ABE (RFC 8511) is currently the only experimental RFC to modify\r\n  the TCP-sender response to ECE. ABE allows modifying multiplicative\r\n  decrease factor only for AIMD TCP and only when ECE arrives in\r\n  congestion avoidance, that is, not when the sender is in slow-start.\r\n>\r\n>  Applying a decrease factor of 0.7 (or higher) when a congestion\r\n  singnal arrives and ends the initial slow start would be\r\n  inconsiderate because it extends the convergence time from\r\n  the slow-start overshoot. ABE has found that using a larger decrease\r\n  factor yields performance improvement when applied in congestion\r\n  avoidance, but not otherwise. Do we have data that would support\r\n  different findings with CUBIC?",
       "createdAt": "2021-08-31T08:13:28Z",
-      "updatedAt": "2021-09-16T12:37:26Z",
+      "updatedAt": "2021-09-21T08:35:35Z",
       "closedAt": null,
       "comments": [
         {
@@ -3063,6 +3063,20 @@
           "body": "Please check #111, which intends to address this issue and #90",
           "createdAt": "2021-09-16T12:37:26Z",
           "updatedAt": "2021-09-16T12:37:26Z"
+        },
+        {
+          "author": "goelvidhi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Yes, this is a dup of #90 ",
+          "createdAt": "2021-09-21T08:32:13Z",
+          "updatedAt": "2021-09-21T08:32:13Z"
+        },
+        {
+          "author": "goelvidhi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Leaving this open until the PR #111  gets merged.",
+          "createdAt": "2021-09-21T08:35:35Z",
+          "updatedAt": "2021-09-21T08:35:35Z"
         }
       ]
     },
@@ -3214,7 +3228,7 @@
       ],
       "body": "Markku Kojo said,\r\n> The draft says that CUBIC MAY implement DSACK [RFC3708], limited slow\r\n  start [RFC 3742], [RFC7661] and hybrid slow start [cites a paper].\r\n  Aren't the first three down references? Not sure if it is appropriate\r\n  for a Stds Track document to cite experimental work or a paper like\r\n  this even though it's a MAY.",
       "createdAt": "2021-08-31T08:24:27Z",
-      "updatedAt": "2021-09-16T13:57:43Z",
+      "updatedAt": "2021-09-21T08:48:12Z",
       "closedAt": null,
       "comments": [
         {
@@ -3244,6 +3258,27 @@
           "body": "Please check #90, which intends to address your first two comments.\r\n\r\nAbout RFC7661, would @gorryfair please chime in?",
           "createdAt": "2021-09-16T12:00:47Z",
           "updatedAt": "2021-09-16T12:00:47Z"
+        },
+        {
+          "author": "goelvidhi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@markkukojo \r\n> Therefore, I think that this draft is not in position to provide a reasonable suggestion to unconditionally restore CC state after spurious congestion events nor to provide evidence that it is always the correct action. Moreover, handling spurious retransmissions is not a key part of CUBIC but it is a more general issue where other CCs have the same challenges as CUBIC and therefore I think the CC response for spurious rexmits should be handled separately and should follow common principles for all CCs.\r\n\r\nResponse to spurious events due to Fast retransmits was added newly to 8312-bis draft as it made sense to cover this scenario which is likely more common than spurious RTOs and folks who implemented QUIC noticed a great throughput improvement when implementing this. I agree that this is common to all CCs but at as of today, I don't think any RFC covers it. For completeness, it made sense to add it to CUBIC.\r\n\r\n> There is no Stds Track CC response algorithm for false Fast Retransmits; this topic was studied around two decades ago and there was no consensus on whether restoring CC state is a good idea in all scenarios. E.g., in mobile networks, a make-before-break handoff from a high RTT path to a low RTT path may result in packet reordering when the available network capacity actually decreases and restoring the old state in such a case is not a sane action.\r\n\r\nHow common is the scenario you are describing above? And if we are switching to low RTT, then the sender will soon-after reduce the congestion window if restoring to old state was a mistake. (i.e. if the old state cwnd > capacity for low RTT path)",
+          "createdAt": "2021-09-21T07:49:54Z",
+          "updatedAt": "2021-09-21T07:49:54Z"
+        },
+        {
+          "author": "goelvidhi",
+          "authorAssociation": "COLLABORATOR",
+          "body": ">The draft allows using RFC 7661 as described in the RFC. However, if I recall it correctly, the equations in RFC 7661 assume that cwnd increase and decrease uses standard methods i.e., alfa=1 and beta=0.5. If the equations in RFC 7661 are directly applied with CUBIC, the outcome might not be expected nor correct. I didn't have time to check this, so I might be wrong, but this is good to double-check with Gorry and/or other authors of RFC 7661 who have better insight to the details of RFC 7661.\r\n\r\nRegarding RFC 7661, there are two things to consider,\r\n1. Threshold for validated vs non-validated phase - this threshold has been set by 7661 based on slow-start increase and is valid for CUBIC too.\r\n> A standard TCP sender in slow-\r\n   start is permitted to double its FlightSize from one RTT to the next.\r\n   This motivated the choice of a threshold value of 1/2. This threshold ensures a\r\n    sender does not further increase the cwnd as long\r\n   as the FlightSize is less than (1/2*cwnd)\r\n\r\n2. Congestion response - RFC 7661 uses 1/2 as the reduction factor which is probably taken from New Reno. I think this is what we need to update in CUBIC. Something like this,\r\n\r\n```\r\nCUBIC updates the response to congestion when RFC 7661 is used to validate the congestion window.\r\nIt updates the congestion window for loss recovery as below,\r\n\r\ncwnd = (Max(pipeACK,LossFlightSize)) * Beta_cubic\r\n\r\nIt also updates the congestion window at the end of the recovery phase to,\r\ncwnd = (Max(pipeACK,LossFlightSize) - R) * Beta_cubic\r\n```\r\n\r\nI don't know how to best document this, should we re-write these equations and explain all the variables or is there a way to reference RFC 7661 and just say, If you use RFC 7661, CUBIC updates Section 4.4.1 of RFC 7661 to replace the 0.5 reduction factor by Beta_cubic?",
+          "createdAt": "2021-09-21T08:21:54Z",
+          "updatedAt": "2021-09-21T08:22:55Z"
+        },
+        {
+          "author": "larseggert",
+          "authorAssociation": "MEMBER",
+          "body": "The latter seems easier to me, but I don't have a strong preference. Waiting to hear from @markkukojo and/or @gorryfair.",
+          "createdAt": "2021-09-21T08:48:12Z",
+          "updatedAt": "2021-09-21T08:48:12Z"
         }
       ]
     },
@@ -3483,7 +3518,7 @@
       "labels": [],
       "body": "[Markku Kojo said](https://mailarchive.ietf.org/arch/msg/tcpm/nd4Af8QRQMDkp_R_9ZQMkI4yGAc):\r\n>Sec 5.9\r\n>\r\n>The statement made here is not convincing and is likely to be incorrect. E.g., CUBIC with larger decrease factor would most likely release capacity notably slower than AIMD TCP if there is sudden congestion.\r\n\r\n",
       "createdAt": "2021-08-31T10:51:53Z",
-      "updatedAt": "2021-09-16T13:58:39Z",
+      "updatedAt": "2021-09-21T14:20:55Z",
       "closedAt": null,
       "comments": [
         {
@@ -3506,6 +3541,20 @@
           "body": "Or @lisongxu, since he self-assigned this issue?",
           "createdAt": "2021-09-16T13:58:38Z",
           "updatedAt": "2021-09-16T13:58:38Z"
+        },
+        {
+          "author": "goelvidhi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Is it better to just remove congestion from this statement? We already covered congestion events in the rest of the draft.\r\nSuggestion,\r\n\r\n```\r\nIf there is a sudden routing change or a mobility event, CUBIC behaves the same as AIMD TCP.\r\n",
+          "createdAt": "2021-09-21T08:27:33Z",
+          "updatedAt": "2021-09-21T08:27:33Z"
+        },
+        {
+          "author": "lisongxu",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Fine with me. Thank, @goelvidhi ",
+          "createdAt": "2021-09-21T14:20:55Z",
+          "updatedAt": "2021-09-21T14:20:55Z"
         }
       ]
     },
@@ -3587,7 +3636,7 @@
       "id": "MDU6SXNzdWU5ODM3MjIwNTY=",
       "title": "(upon receiving) an ACK",
       "url": "https://github.com/NTAP/rfc8312bis/issues/101",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "larseggert",
       "authorAssociation": "MEMBER",
       "assignees": [
@@ -3596,8 +3645,8 @@
       "labels": [],
       "body": "[Markku Kojo said](https://mailarchive.ietf.org/arch/msg/tcpm/nd4Af8QRQMDkp_R_9ZQMkI4yGAc):\r\n>In many occassions:\r\n>\r\n>\"(upon receiving) an ACK\" -> \"(upon receiving) a new ACK\"",
       "createdAt": "2021-08-31T10:53:32Z",
-      "updatedAt": "2021-09-16T11:41:45Z",
-      "closedAt": null,
+      "updatedAt": "2021-09-21T07:25:58Z",
+      "closedAt": "2021-09-21T07:25:58Z",
       "comments": [
         {
           "author": "larseggert",
@@ -3636,7 +3685,7 @@
       "labels": [],
       "body": "[Markku Kojo said](https://mailarchive.ietf.org/arch/msg/tcpm/nd4Af8QRQMDkp_R_9ZQMkI4yGAc):\r\n>On page 13:\r\n>\r\n> \" the sender MAY employ a Fast\r\n   Recovery algorithm to gradually adjust the congestion window to its\r\n   new reduced _ssthresh_ value.\"\r\n>\r\n>I assume this is aiming at saying that something similar to PRR MAY be used to reduce cwnd. This, however, is somewhat vaguely said and using fasr recovery is misleading. We need to remember also that it might not be trivial to have it right. So, dunno whether it would be useful to drop this.",
       "createdAt": "2021-08-31T10:54:13Z",
-      "updatedAt": "2021-09-20T10:38:39Z",
+      "updatedAt": "2021-09-21T09:13:09Z",
       "closedAt": null,
       "comments": [
         {
@@ -3652,6 +3701,13 @@
           "body": "Mayby I was not clear in my comment. Sure RFC 3782 and  RFC 6675 (and RFC 5681) Fast Recovery algorithms are applicable with CUBIC, but none of these Fast Recovery algorithms \"gradually adjust the congestion window to its new reduced ssthresh value.\"  As the name \"Fast Recovery\" indicates, these algorithms include loss recovery in addition to the intertwined congestion control actions. And, when ECN is used the ECN congestion response to ECE involves no Fast Recovery actions. So, it is unclear what this statement means and what an implementer could possibly do different from the actions listed in Sec 4.6?\r\n\r\nMore importantly. The draft says in Sec. 4.2: \r\n  \"It does not make any changes to the TCP Fast Recovery and Fast\r\n   Retransmit algorithms [RFC6582][RFC6675].\"\r\n\r\nBut it does modify  RFC6582, RFC 6675, and RFC 5681 Fast Retransmit&Fast Recovery by applying beta_cubic to cwnd, not FlightSize. This is incorrect and would bring back an old design&implementation bug that was corrected more than two decades ago when RFC 2581 was published (and subsequently corrected also for RFC 6582 and RFC 6675). Please see the implementation note attached to Equation (4) of RFC 5681: \"An easy mistake to make is to simply use cwnd, rather than FlightSize, which in some implementations may incidentally increase well beyond rwnd.\"\r\n\r\nUsing cwnd in the equation will also result in incorrect outcome in some other cases as well, for example, if the sender is application limited.\r\n\r\nPlease open a new issue to address this latter problem.",
           "createdAt": "2021-09-20T10:38:39Z",
           "updatedAt": "2021-09-20T10:38:39Z"
+        },
+        {
+          "author": "goelvidhi",
+          "authorAssociation": "COLLABORATOR",
+          "body": "For the first part, we can fix it by separating the losses from ECE,\r\nSomething like,\r\n```\r\nOn detecting a packet loss, the sender MAY employ a Fast Recovery algorithm to update\r\nthe congestion window to its new reduced ssthresh value at the end of loss recovery.\r\n```\r\n@markkukojo  Is this change enough for your first comment?\r\n\r\nI have filed a separate issue #114 for using FlightSize instead of cwnd.",
+          "createdAt": "2021-09-21T09:12:55Z",
+          "updatedAt": "2021-09-21T09:13:09Z"
         }
       ]
     },
@@ -3688,6 +3744,22 @@
       "body": "Based on @bbriscoe's [email](https://mailarchive.ietf.org/arch/msg/tcpm/AYcFztqVPqZHj5s4UNIZmC-uAUI)",
       "createdAt": "2021-09-15T15:11:25Z",
       "updatedAt": "2021-09-16T11:33:31Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 114,
+      "id": "I_kwDOEpK-U847umUk",
+      "title": "Use FlightSize instead of cwnd",
+      "url": "https://github.com/NTAP/rfc8312bis/issues/114",
+      "state": "OPEN",
+      "author": "goelvidhi",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "@markkukojo said,\r\n> More importantly. The draft says in Sec. 4.2:\r\n\"It does not make any changes to the TCP Fast Recovery and Fast\r\nRetransmit algorithms [RFC6582][RFC6675].\"\r\n\r\n> But it does modify RFC6582, RFC 6675, and RFC 5681 Fast Retransmit&Fast Recovery by applying beta_cubic to cwnd, not FlightSize. This is incorrect and would bring back an old design&implementation bug that was corrected more than two decades ago when RFC 2581 was published (and subsequently corrected also for RFC 6582 and RFC 6675). Please see the implementation note attached to Equation (4) of RFC 5681: \"An easy mistake to make is to simply use cwnd, rather than FlightSize, which in some implementations may incidentally increase well beyond rwnd.\"\r\n\r\n> Using cwnd in the equation will also result in incorrect outcome in some other cases as well, for example, if the sender is application limited.",
+      "createdAt": "2021-09-21T08:52:56Z",
+      "updatedAt": "2021-09-21T08:53:11Z",
       "closedAt": null,
       "comments": []
     }
@@ -9308,24 +9380,26 @@
       "id": "PR_kwDOEpK-U84r1Twx",
       "title": "Use \"new ACK\" in more places, and define it.",
       "url": "https://github.com/NTAP/rfc8312bis/pull/110",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "larseggert",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "Fixes #101.",
       "createdAt": "2021-09-16T11:40:25Z",
-      "updatedAt": "2021-09-17T09:19:37Z",
+      "updatedAt": "2021-09-21T07:26:05Z",
       "baseRepository": "NTAP/rfc8312bis",
       "baseRefName": "main",
       "baseRefOid": "cfdf2a4130acb34e3ed39de082a9b1a7061523d8",
       "headRepository": "NTAP/rfc8312bis",
       "headRefName": "more-new-ack",
       "headRefOid": "3526777a19190c40b86dfb27e768ae633be6dd20",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2021-09-21T07:25:58Z",
+      "mergedAt": "2021-09-21T07:25:57Z",
+      "mergedBy": "larseggert",
+      "mergeCommit": {
+        "oid": "b28a2bada0c71ce665a96add557fac0c070bc1f6"
+      },
       "comments": [
         {
           "author": "markkukojo",
@@ -9335,7 +9409,21 @@
           "updatedAt": "2021-09-17T09:19:37Z"
         }
       ],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOEpK-U84tQ0cR",
+          "commit": {
+            "abbreviatedOid": "3526777"
+          },
+          "author": "goelvidhi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2021-09-21T07:19:37Z",
+          "updatedAt": "2021-09-21T07:19:37Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 111,
@@ -9349,19 +9437,160 @@
       "labels": [],
       "body": "Fixes #90.",
       "createdAt": "2021-09-16T11:59:26Z",
-      "updatedAt": "2021-09-16T12:40:49Z",
+      "updatedAt": "2021-09-22T06:55:50Z",
       "baseRepository": "NTAP/rfc8312bis",
       "baseRefName": "main",
       "baseRefOid": "cfdf2a4130acb34e3ed39de082a9b1a7061523d8",
       "headRepository": "NTAP/rfc8312bis",
       "headRefName": "downrefs",
-      "headRefOid": "615ddf16c230072484fabd07548412cb9ed91c0d",
+      "headRefOid": "a5d1a3dd346ccb10ab1f087fb631ada398b115e0",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOEpK-U84tRGRM",
+          "commit": {
+            "abbreviatedOid": "615ddf1"
+          },
+          "author": "goelvidhi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-09-21T08:34:38Z",
+          "updatedAt": "2021-09-21T08:35:54Z",
+          "comments": [
+            {
+              "originalPosition": 37,
+              "body": "Should AIMD TCP (RFC5681) only be used as a last resort? That will encourage a new implementer to always use Hystart++ unless there is some unavoidable circumstance.",
+              "createdAt": "2021-09-21T08:34:38Z",
+              "updatedAt": "2021-09-21T08:35:54Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOEpK-U84tRIyx",
+          "commit": {
+            "abbreviatedOid": "615ddf1"
+          },
+          "author": "larseggert",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-09-21T08:44:52Z",
+          "updatedAt": "2021-09-21T08:44:52Z",
+          "comments": [
+            {
+              "originalPosition": 37,
+              "body": "That is what I tried to express with the SHOULD and MAY. I'll try to make this clearer.",
+              "createdAt": "2021-09-21T08:44:52Z",
+              "updatedAt": "2021-09-21T08:44:52Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOEpK-U84tRI87",
+          "commit": {
+            "abbreviatedOid": "615ddf1"
+          },
+          "author": "larseggert",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-09-21T08:45:28Z",
+          "updatedAt": "2021-09-21T08:45:29Z",
+          "comments": [
+            {
+              "originalPosition": 38,
+              "body": "```suggestion\r\nslow start algorithm {{!RFC5681}} when HyStart++ is not suitable. Experimental alternatives include\r\n```",
+              "createdAt": "2021-09-21T08:45:28Z",
+              "updatedAt": "2021-09-21T08:45:29Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOEpK-U84tRJAL",
+          "commit": {
+            "abbreviatedOid": "615ddf1"
+          },
+          "author": "larseggert",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-09-21T08:45:40Z",
+          "updatedAt": "2021-09-21T08:45:40Z",
+          "comments": [
+            {
+              "originalPosition": 38,
+              "body": "@goelvidhi how is this?",
+              "createdAt": "2021-09-21T08:45:40Z",
+              "updatedAt": "2021-09-21T08:45:40Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOEpK-U84tRRE_",
+          "commit": {
+            "abbreviatedOid": "615ddf1"
+          },
+          "author": "goelvidhi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-09-21T09:17:23Z",
+          "updatedAt": "2021-09-21T09:17:23Z",
+          "comments": [
+            {
+              "originalPosition": 38,
+              "body": "LGTM",
+              "createdAt": "2021-09-21T09:17:23Z",
+              "updatedAt": "2021-09-21T09:17:23Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOEpK-U84tSfwj",
+          "commit": {
+            "abbreviatedOid": "615ddf1"
+          },
+          "author": "lisongxu",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-09-21T14:23:19Z",
+          "updatedAt": "2021-09-21T14:23:19Z",
+          "comments": [
+            {
+              "originalPosition": 37,
+              "body": "@sangtaeha How do you think?",
+              "createdAt": "2021-09-21T14:23:19Z",
+              "updatedAt": "2021-09-21T14:23:19Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOEpK-U84tVJDF",
+          "commit": {
+            "abbreviatedOid": "18f2839"
+          },
+          "author": "larseggert",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-09-22T06:55:45Z",
+          "updatedAt": "2021-09-22T06:55:45Z",
+          "comments": [
+            {
+              "originalPosition": 38,
+              "body": "```suggestion\r\nslow start algorithm {{!RFC5681}} when HyStart++ is not suitable.\r\nExperimental alternatives include\r\n```",
+              "createdAt": "2021-09-22T06:55:45Z",
+              "updatedAt": "2021-09-22T06:55:45Z"
+            }
+          ]
+        }
+      ]
     },
     {
       "number": 112,
@@ -9403,19 +9632,80 @@
       "labels": [],
       "body": "[Issue 98](https://github.com/NTAP/rfc8312bis/issues/98)",
       "createdAt": "2021-09-20T16:09:32Z",
-      "updatedAt": "2021-09-20T16:41:07Z",
+      "updatedAt": "2021-09-22T06:08:23Z",
       "baseRepository": "NTAP/rfc8312bis",
       "baseRefName": "main",
       "baseRefOid": "2e953b191f31ab36f6f22c010c76ea8d97cd2206",
       "headRepository": "lisongxu/rfc8312bis",
       "headRefName": "main",
-      "headRefOid": "3f1badd9e7dbd127163cd5f20e22098f28c04910",
+      "headRefOid": "908c1a9690edc1c5082b492a8470d00cc1c6f5be",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOEpK-U84tRE_c",
+          "commit": {
+            "abbreviatedOid": "3f1badd"
+          },
+          "author": "goelvidhi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-09-21T08:29:19Z",
+          "updatedAt": "2021-09-21T08:36:28Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "I don't think it still covers the difference in CUBIC increase vs AIMD, I suggested on the issue to simply remove `congestion` from this statement and only keep routing or mobility event.",
+              "createdAt": "2021-09-21T08:29:19Z",
+              "updatedAt": "2021-09-21T08:36:28Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOEpK-U84tShQH",
+          "commit": {
+            "abbreviatedOid": "908c1a9"
+          },
+          "author": "lisongxu",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-09-21T14:27:47Z",
+          "updatedAt": "2021-09-21T14:27:47Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "done. Thanks",
+              "createdAt": "2021-09-21T14:27:47Z",
+              "updatedAt": "2021-09-21T14:27:47Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOEpK-U84tVBWB",
+          "commit": {
+            "abbreviatedOid": "908c1a9"
+          },
+          "author": "goelvidhi",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-09-22T06:08:14Z",
+          "updatedAt": "2021-09-22T06:08:23Z",
+          "comments": [
+            {
+              "originalPosition": 9,
+              "body": "My point was there is no change in Cubic and New Reno when there is a routing or mobility event. The MD factor only comes into picture when we have congestion or packet loss event. I am not sure what was the reason to write this section. @lisongxu could you provide some context about the purpose of this section?",
+              "createdAt": "2021-09-22T06:08:15Z",
+              "updatedAt": "2021-09-22T06:08:23Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
