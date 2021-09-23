@@ -199,20 +199,21 @@ as a default congestion controller.
 The design of CUBIC was motivated by the well-documented problem
 classical TCP has with  low utilization over fast and long-distance
 networks {{K03}}{{?RFC3649}}. This problem arises from a slow increase
-of the congestion window following a congestion event in a network
-with a large bandwidth-delay product (BDP). {{HKLRX06}} indicates that
-this problem is frequently observed even in the range of congestion
-window sizes over several hundreds of packets. This problem is equally
-applicable to all Reno-style TCP standards and their variants,
-including TCP-Reno {{!RFC5681}}, TCP-NewReno {{!RFC6582}}{{!RFC6675}},
-SCTP {{?RFC4960}}, and TFRC {{!RFC5348}}, which use the same linear
-increase function for window growth. We refer to all Reno-style TCP
-standards and their variants collectively as "Reno TCP" below.
+of the congestion window following a congestion event in a network with
+a large bandwidth-delay product (BDP). {{HKLRX06}} indicates that this
+problem is frequently observed even in the range of congestion window
+sizes over several hundreds of packets. This problem is equally
+applicable to all Reno-style standards and their variants, including
+TCP-Reno {{!RFC5681}}, TCP-NewReno {{!RFC6582}}{{!RFC6675}}, SCTP
+{{?RFC4960}}, TFRC {{!RFC5348}}, and QUIC congestion control
+{{!RFC9002}}, which use the same linear increase function for window
+growth.  We refer to all Reno-style standards and their variants
+collectively as "Reno" below.
 
 CUBIC, originally proposed in {{HRX08}}, is a modification to the
-congestion control algorithm of classical Reno TCP to remedy this
+congestion control algorithm of classical Reno to remedy this
 problem. Specifically, CUBIC uses a cubic function instead of the linear
-window increase function of Reno TCP to improve scalability and
+window increase function of Reno to improve scalability and
 stability under fast and long-distance networks.
 
 This document updates the specification of CUBIC to include algorithmic
@@ -231,7 +232,7 @@ by Linux in the year 2005 and had been used for several years by the
 Internet community at large.
 
 CUBIC uses a similar window increase function as BIC-TCP and is
-designed to be less aggressive and fairer to Reno TCP in bandwidth
+designed to be less aggressive and fairer to Reno in bandwidth
 usage than BIC-TCP while maintaining the strengths of BIC-TCP such as
 stability, window scalability, and round-trip time (RTT) fairness.
 
@@ -255,8 +256,8 @@ Principle 1:
   convex function.
 
 Principle 2:
-: To be Reno-friendly, CUBIC is designed to behave like Reno TCP in
-  networks with short RTTs and small bandwidth where Reno TCP
+: To be Reno-friendly, CUBIC is designed to behave like Reno in
+  networks with short RTTs and small bandwidth where Reno
   performs well.
 
 Principle 3:
@@ -272,7 +273,7 @@ Principle 4:
 For better network utilization and stability, CUBIC {{HRX08}} uses a
 cubic window increase function in terms of the elapsed time from the
 last congestion event. While most alternative congestion control
-algorithms to Reno TCP increase the congestion window using convex
+algorithms to Reno increase the congestion window using convex
 functions, CUBIC uses both the concave and convex profiles of a cubic
 function for window growth.
 
@@ -306,12 +307,12 @@ synchronizations.
 
 ## Principle 2 for Reno-Friendliness
 
-CUBIC promotes per-flow fairness to Reno TCP. Note that Reno TCP
+CUBIC promotes per-flow fairness to Reno. Note that Reno
 performs well over paths with short RTTs and small bandwidths (or
 small BDPs). There is only a scalability problem in networks with long
 RTTs and large bandwidths (or large BDPs).
 
-A congestion control algorithm designed to be friendly to Reno TCP on
+A congestion control algorithm designed to be friendly to Reno on
 a per-flow basis must increase its congestion window less aggressively
 in small BDP networks than in large BDP networks.
 
@@ -321,10 +322,10 @@ in large-BDP networks. Thus, CUBIC increases its congestion window
 less aggressively in small-BDP networks than in large-BDP networks.
 
 Furthermore, in cases when the cubic function of CUBIC would increase
-the congestion window less aggressively than Reno TCP, CUBIC simply
-follows the window size of Reno TCP to ensure that CUBIC achieves at
-least the same throughput as Reno TCP in small-BDP networks. We call
-this region where CUBIC behaves like Reno TCP the "Reno-friendly
+the congestion window less aggressively than Reno, CUBIC simply
+follows the window size of Reno to ensure that CUBIC achieves at
+least the same throughput as Reno in small-BDP networks. We call
+this region where CUBIC behaves like Reno the "Reno-friendly
 region".
 
 ## Principle 3 for RTT Fairness
@@ -340,25 +341,25 @@ different RTTs have similar congestion window sizes under steady state
 when they operate outside the Reno-friendly region.
 
 This notion of a linear throughput ratio is similar to that of Reno
-TCP under high statistical multiplexing where packet loss is
+under high statistical multiplexing where packet loss is
 independent of individual flow rates. However, under low statistical
-multiplexing, the throughput ratio of Reno TCP flows with different
+multiplexing, the throughput ratio of Reno flows with different
 RTTs is quadratically proportional to the inverse of their RTT ratio
 {{XHR04}}.
 
 CUBIC always ensures a linear throughput ratio independent of the
-amount of statistical multiplexing. This is an improvement over Reno
-TCP. While there is no consensus on particular throughput ratios for
+amount of statistical multiplexing. This is an improvement over Reno.
+While there is no consensus on particular throughput ratios for
 different RTT flows, we believe that over wired Internet paths, use of
 a linear throughput ratio seems more reasonable than equal throughputs
 (i.e., the same throughput for flows with different RTTs) or a
 higher-order throughput ratio (e.g., a quadratical throughput ratio of
-Reno TCP under low statistical multiplexing environments).
+Reno under low statistical multiplexing environments).
 
 ## Principle 4 for the CUBIC Decrease Factor
 
 To balance between scalability and convergence speed, CUBIC sets the
-multiplicative window decrease factor to 0.7, whereas Reno TCP uses
+multiplicative window decrease factor to 0.7, whereas Reno uses
 0.5.
 
 While this improves the scalability of CUBIC, a side effect of this
@@ -456,7 +457,7 @@ that is, W<sub>cubic</sub>(*t* + *RTT*), as described in {{win-inc}}.
 
 *W<sub>est</sub>*:
 An estimate for the congestion window in segments in the Reno-friendly
-region, that is, an estimate for the congestion window of Reno TCP.
+region, that is, an estimate for the congestion window of Reno.
 
 *segments_acked*:
 Number of MSS-sized segments acked when an ACK is received. This
@@ -466,14 +467,14 @@ an ACK acknowledges a segment smaller than the MSS.
 
 ## Window Increase Function {#win-inc}
 
-CUBIC maintains the acknowledgment (ACK) clocking of Reno TCP by
+CUBIC maintains the acknowledgment (ACK) clocking of Reno by
 increasing the congestion window only at the reception of an ACK. It
 does not make any changes to the TCP Fast Recovery and Fast Retransmit
 algorithms {{!RFC6582}}{{!RFC6675}}.
 
 During congestion avoidance, after a congestion event is detected
 by mechanisms described in {{cubic-inc}}, CUBIC changes the window
-increase function of Reno TCP.
+increase function of Reno.
 
 CUBIC uses the following window increase function:
 
@@ -530,7 +531,7 @@ Depending on the value of the current congestion window size *cwnd*,
 CUBIC runs in three different regions:
 
 1. The Reno-friendly region, which ensures that CUBIC achieves at
-   least the same throughput as Reno TCP.
+   least the same throughput as Reno.
 
 2. The concave region, if CUBIC is not in the Reno-friendly region
    and *cwnd* is less than *W<sub>max</sub>*.
@@ -542,10 +543,10 @@ Below, we describe the exact actions taken by CUBIC in each region.
 
 ## Reno-Friendly Region {#Reno-friendly}
 
-Reno TCP performs well in certain types of networks, for example,
+Reno performs well in certain types of networks, for example,
 under short RTTs and small bandwidths (or small BDPs). In these
 networks, CUBIC remains in the Reno-friendly region to achieve at
-least the same throughput as Reno TCP.
+least the same throughput as Reno.
 
 The Reno-friendly region is designed according to the analysis in
 {{FHP00}}, which studies the performance of an AIMD algorithm with an
@@ -562,7 +563,7 @@ calculated using {{eq3}}.
 ~~~
 {: #eq3 artwork-align="center" }
 
-By the same analysis, to achieve the same average window size as Reno TCP
+By the same analysis, to achieve the same average window size as Reno
 that uses AIMD(1, 0.5), {{{α}{}}} must be equal to,
 
 ~~~ math
@@ -578,7 +579,7 @@ size *W<sub>est</sub>* in the Reno-friendly region with
 ~~~
 {: artwork-align="center" }
 
-which achieves the same average window size as Reno TCP. When
+which achieves the same average window size as Reno. When
 receiving a new ACK in congestion avoidance (where *cwnd* could be
 greater than or less than *W<sub>max</sub>*), CUBIC checks whether
 W<sub>cubic</sub>(*t*) is less than *W<sub>est</sub>*. If so, CUBIC is
@@ -605,8 +606,8 @@ Note that once *W<sub>est</sub>* reaches *W<sub>max</sub>*, that is,
 *W<sub>est</sub>* >= *W<sub>max</sub>*, CUBIC needs to start probing to
 determine the new value of *W<sub>max</sub>*. At this point,
 {{{α}{}}}*<sub>cubic</sub>* SHOULD be set to 1 to ensure that
-CUBIC can achieve the same congestion window increment as Reno
-TCP, which uses AIMD(1, 0.5).
+CUBIC can achieve the same congestion window increment as Reno,
+which uses AIMD(1, 0.5).
 
 ## Concave Region
 
@@ -721,7 +722,7 @@ without any other traffic, Fast Convergence SHOULD be disabled.
 
 ## Timeout
 
-In case of a timeout, CUBIC follows Reno TCP to reduce *cwnd*
+In case of a timeout, CUBIC follows Reno to reduce *cwnd*
 {{!RFC5681}}, but sets *ssthresh* using {{{β}{}}}*<sub>cubic</sub>*
 (same as in {{mult-dec}}) in a way that is different from Reno TCP
 {{!RFC5681}}.
@@ -941,7 +942,7 @@ flows.
 
 ## Difficult Environments
 
-CUBIC is designed to remedy the poor performance of Reno TCP in fast
+CUBIC is designed to remedy the poor performance of Reno in fast
 and long-distance networks.
 
 ## Investigating a Range of Environments
@@ -951,11 +952,11 @@ CUBIC has also been extensively studied by using both NS-2 simulation
 and testbed experiments, covering a wide range of network
 environments. More information can be found in {{HKLRX06}}.
 
-Same as Reno TCP, CUBIC is a loss-based congestion control algorithm.
+Same as Reno, CUBIC is a loss-based congestion control algorithm.
 Because CUBIC is designed to be more aggressive (due to a faster
 window increase function and bigger multiplicative decrease factor)
-than Reno TCP in fast and long-distance networks, it can fill large
-drop-tail buffers more quickly than Reno TCP and increases the risk of
+than Reno in fast and long-distance networks, it can fill large
+drop-tail buffers more quickly than Reno and increases the risk of
 a standing queue {{?RFC8511}}. In this case, proper queue sizing and
 management {{!RFC7567}} could be used to reduce the packet queuing
 delay.
@@ -963,9 +964,9 @@ delay.
 ## Protection against Congestion Collapse
 
 With regard to the potential of causing congestion collapse, CUBIC
-behaves like Reno TCP, since CUBIC modifies only the window adjustment
-algorithm of Reno TCP. Thus, it does not modify the ACK clocking and
-timeout behaviors of Reno TCP.
+behaves like Reno, since CUBIC modifies only the window adjustment
+algorithm of Reno. Thus, it does not modify the ACK clocking and
+timeout behaviors of Reno.
 
 ## Fairness within the Alternative Congestion Control Algorithm
 
@@ -991,13 +992,13 @@ might be very high after restarting from these periods.
 ## Responses to Sudden or Transient Events
 
 If there is a sudden congestion, a routing change, or a mobility
-event, CUBIC behaves the same as Reno TCP.
+event, CUBIC behaves the same as Reno.
 
 ## Incremental Deployment
 
 CUBIC requires only changes to TCP senders, and it does not require
 any changes at TCP receivers. That is, a CUBIC sender works correctly
-with the Reno TCP receivers. In addition, CUBIC does not require any
+with the Reno receivers. In addition, CUBIC does not require any
 changes to routers and does not require any assistance from routers.
 
 # Security Considerations
