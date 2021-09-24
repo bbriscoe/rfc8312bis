@@ -221,7 +221,7 @@ improvements based on the Linux, Windows, and Apple implementations and
 recent academic work. Based on the extensive deployment experience with
 CUBIC, it also moves the specification to the Standards Track,
 obsoleting {{?RFC8312}}. This requires an update to {{!RFC5681}}, which
-limits the aggressiveness of TCP-Reno implementations in its Section 3.
+limits the aggressiveness of Reno TCP implementations in its Section 3.
 Since CUBIC is occasionally more aggressive than the {{!RFC5681}}
 algorithms, this document updates {{!RFC5681}} to allow for CUBIC's
 behavior.
