@@ -997,7 +997,7 @@ If there is a sudden increase in capacity, e.g. due to variable radio
 capacity, a routing change, or a mobility event, CUBIC is designed to
 utilize the newly available capacity faster than Reno.
 
-On the other hand, if there is a sudden decrease in capacity, Cubic
+On the other hand, if there is a sudden decrease in capacity, CUBIC
 reduces more slowly than Reno. This remains true whether or not CUBIC
 is in Reno-Friendly mode and whether or not fast convergence is
 enabled.
