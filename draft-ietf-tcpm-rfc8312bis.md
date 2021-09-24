@@ -919,7 +919,7 @@ CUBIC uses a more aggressive window increase function than Reno
 for fast and long-distance networks.
 
 The following table shows that to achieve the 10 Gbps rate, Reno TCP
-requires a packet loss rate of 2.0e-10, while TCP CUBIC requires a packet
+requires a packet loss rate of 2.0e-10, while CUBIC TCP requires a packet
 loss rate of 2.9e-8.
 
 | Throughput (Mbps) | Average W | Reno P  | HSTCP P | CUBIC P |
