@@ -994,7 +994,7 @@ might be very high after restarting from these periods.
 ## Responses to Sudden or Transient Events
 
 If there is a sudden increase in capacity, e.g. due to variable radio
-capacity, a routing change, or a mobility event, Cubic is designed to
+capacity, a routing change, or a mobility event, CUBIC is designed to
 utilize the newly available capacity faster than Reno.
 
 On the other hand, if there is a sudden decrease in capacity, Cubic
