@@ -999,7 +999,7 @@ utilize the newly available capacity faster than Reno.
 
 On the other hand, if there is a sudden decrease in capacity, CUBIC
 reduces more slowly than Reno. This remains true whether or not CUBIC
-is in Reno-Friendly mode and whether or not fast convergence is
+is in Reno-friendly mode and whether or not fast convergence is
 enabled.
 
 ## Incremental Deployment
