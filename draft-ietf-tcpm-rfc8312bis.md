@@ -197,7 +197,7 @@ transport protocols such as QUIC {{?RFC9000}} and SCTP {{?RFC4960}}
 as a default congestion controller.
 
 The design of CUBIC was motivated by the well-documented problem
-classical TCP-Reno has with  low utilization over fast and long-distance
+classical Reno TCP has with  low utilization over fast and long-distance
 networks {{K03}}{{?RFC3649}}. This problem arises from a slow increase
 of the congestion window following a congestion event in a network with
 a large bandwidth-delay product (BDP). {{HKLRX06}} indicates that this
