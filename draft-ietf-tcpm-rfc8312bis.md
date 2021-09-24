@@ -850,7 +850,7 @@ Reno performs well in the following two types of networks:
 
 CUBIC is designed to behave very similarly to Reno in the above
 two types of networks. The following two tables show the average
-window sizes of Reno TCP, HSTCP, and TCP CUBIC. The average window sizes
+window sizes of Reno TCP, HSTCP, and CUBIC TCP. The average window sizes
 of Reno TCP and HSTCP are from {{?RFC3649}}. The average window size
 of CUBIC is calculated using {{eq6}} and the CUBIC Reno-friendly
 region for three different values of *C*.
