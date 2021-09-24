@@ -997,8 +997,8 @@ event, CUBIC behaves the same as Reno.
 
 ## Incremental Deployment
 
-CUBIC requires only changes to the congestion control at the sender, and it does not require
-any changes at receivers. That is, a CUBIC sender works correctly
+CUBIC requires only changes to the congestion control at the sender, and it does
+not require any changes at receivers. That is, a CUBIC sender works correctly
 with Reno receivers. In addition, CUBIC does not require any
 changes to routers and does not require any assistance from routers.
 
